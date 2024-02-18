@@ -47,3 +47,11 @@ export const FornecedoraSchema = z.object({
   cnpj: z.string().nonempty(),
   fone: z.string().nonempty()
 })
+
+export const TransportadoraSchema = z.object({
+  id: z.number().optional(),
+  nomeFantasia: z.string().nonempty(),
+  razaoSocial: z.string().nonempty(),
+  cnpj: z.string().nonempty(),
+  fone: z.string().nonempty()
+})

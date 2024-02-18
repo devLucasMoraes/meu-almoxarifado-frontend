@@ -47,6 +47,14 @@ export type TFornecedora = {
   fone: string
 }
 
+export type TTransportadora = {
+  id: number
+  nomeFantasia: string
+  razaoSocial: string
+  cnpj: string
+  fone: string
+}
+
 export type TAutocompleteOption = {
   id: number
   label: string
