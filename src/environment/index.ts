@@ -4,11 +4,10 @@ const LIMITE_DE_LINHAS_PADRAO = 10
 // Definir caminhos de URL para diferentes entidades
 const PagePaths = {
   REQUISITANTES: {
-    LIST: '/requisitantes',
-    SHOW: '/requisitantes/show/',
-    EDIT: '/requisitantes/edit/',
-    NEW: '/requisitantes/new',
-    DELETE: '/requisitantes/delete/'
+    LIST_PAGE: '/dashboard/requisitantes',
+    SHOW_PAGE: '/dashboard/requisitantes/id/show',
+    EDIT_PAGE: '/dashboard/requisitantes/id/edit',
+    CREATE_PAGE: '/dashboard/requisitantes/create'
   },
   LOCAIS_DE_APLICACAO: {
     LIST: '/locais',

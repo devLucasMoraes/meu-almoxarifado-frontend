@@ -55,3 +55,9 @@ export const TransportadoraSchema = z.object({
   cnpj: z.string().nonempty(),
   fone: z.string().nonempty()
 })
+
+export const RequisitanteSchema = z.object({
+  id: z.number().optional(),
+  nome: z.string().nonempty(),
+  fone: z.string().nonempty()
+})
