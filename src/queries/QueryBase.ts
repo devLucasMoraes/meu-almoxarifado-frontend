@@ -5,27 +5,27 @@ import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query
 
 export class QueryBase<T> {
   constructor(
-    private resourceName: string,
+    private resourceKey: string,
     private service: BaseService<T, TSpringPageData<T>, TSpringPageData<TAutocompleteOption>>
   ) {}
 
   getById(id: number) {
     return queryOptions({
-      queryKey: [this.resourceName, id],
+      queryKey: [this.resourceKey, id],
       queryFn: () => this.service.getById(id)
     })
   }
 
   getAll(page: number, pageSize: number) {
     return queryOptions({
-      queryKey: [this.resourceName, page, pageSize],
+      queryKey: [this.resourceKey, page, pageSize],
       queryFn: () => this.service.getAll(page, pageSize)
     })
   }
 
   searchTerm(term: string, page: number, pageSize: number) {
     return queryOptions({
-      queryKey: [this.resourceName, term, page, pageSize],
+      queryKey: [this.resourceKey, term, page, pageSize],
       queryFn: () => this.service.searchTerm(term, page, pageSize)
     })
   }
@@ -36,7 +36,7 @@ export class QueryBase<T> {
     return useMutation({
       mutationFn: (data: T) => this.service.create(data),
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [this.resourceName] })
+        queryClient.invalidateQueries({ queryKey: [this.resourceKey] })
       },
       onError: error => {
         alert(error)
@@ -50,7 +50,7 @@ export class QueryBase<T> {
     return useMutation({
       mutationFn: (data: T) => this.service.updateById(id, data),
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [this.resourceName] })
+        queryClient.invalidateQueries({ queryKey: [this.resourceKey] })
       },
       onError: error => {
         alert(error)
@@ -64,7 +64,7 @@ export class QueryBase<T> {
     return useMutation({
       mutationFn: (id: number) => this.service.deleteById(id),
       onSuccess: id => {
-        queryClient.invalidateQueries({ queryKey: [this.resourceName] })
+        queryClient.invalidateQueries({ queryKey: [this.resourceKey] })
         alert('Registro apagado com sucesso!')
       },
       onError: error => {

@@ -39,3 +39,11 @@ export const MaterialSchema = z.object({
   idCategoria: z.number(),
   fornecedorasVinculadas: z.array(VinculoMaterialFornecedoraSchema).optional()
 })
+
+export const FornecedoraSchema = z.object({
+  id: z.number().optional(),
+  nomeFantasia: z.string().nonempty(),
+  razaoSocial: z.string().nonempty(),
+  cnpj: z.string().nonempty(),
+  fone: z.string().nonempty()
+})
