@@ -1,7 +1,7 @@
 'use client'
 import { Environment } from '@/environment'
 import { FornecedoraQueries } from '@/queries/FornecedoraQueries'
-import { FornecedoraSchema } from '@/schemas/schemas'
+import { FornecedoraSchema } from '@/schemas'
 import { TFornecedora } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'

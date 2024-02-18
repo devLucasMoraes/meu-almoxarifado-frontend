@@ -1,7 +1,7 @@
 'use client'
 import { Environment } from '@/environment'
 import { TransportadoraQueries } from '@/queries/TransportadoraQueries'
-import { TransportadoraSchema } from '@/schemas/schemas'
+import { TransportadoraSchema } from '@/schemas'
 import { TTransportadora } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'

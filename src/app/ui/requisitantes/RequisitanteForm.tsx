@@ -1,7 +1,7 @@
 'use client'
 import { Environment } from '@/environment'
 import { RequisitanteQueries } from '@/queries/RequisitanteQueries'
-import { RequisitanteSchema } from '@/schemas/schemas'
+import { RequisitanteSchema } from '@/schemas'
 import { TRequisitante } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'

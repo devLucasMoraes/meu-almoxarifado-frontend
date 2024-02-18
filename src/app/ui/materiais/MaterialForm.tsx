@@ -1,7 +1,7 @@
 'use client'
 import { Environment } from '@/environment'
 import { MaterialQueries } from '@/queries/MaterialQueries'
-import { MaterialSchema } from '@/schemas/schemas'
+import { MaterialSchema } from '@/schemas'
 import { TMaterial } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'

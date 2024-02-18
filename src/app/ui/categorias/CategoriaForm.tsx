@@ -1,7 +1,7 @@
 'use client'
 import { Environment } from '@/environment'
 import { CategoriaQueries } from '@/queries/CategoriaQueries'
-import { CategoriaSchema } from '@/schemas/schemas'
+import { CategoriaSchema } from '@/schemas'
 import { TCategoria } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
