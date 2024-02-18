@@ -10,11 +10,10 @@ const PagePaths = {
     CREATE_PAGE: '/dashboard/requisitantes/create'
   },
   LOCAIS_DE_APLICACAO: {
-    LIST: '/locais',
-    SHOW: '/locais/show/',
-    EDIT: '/locais/edit/',
-    NEW: '/locais/new',
-    DELETE: '/locais/delete/'
+    LIST_PAGE: '/dashboard/locais',
+    SHOW_PAGE: '/dashboard/locais/id/show',
+    EDIT_PAGE: '/dashboard/locais/id/edit',
+    CREATE_PAGE: '/dashboard/locais/create'
   },
   NFE_DE_COMPRA: {
     LIST: '/nfe_de_compra',

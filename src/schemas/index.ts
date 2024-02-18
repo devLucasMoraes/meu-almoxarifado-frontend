@@ -61,3 +61,8 @@ export const RequisitanteSchema = z.object({
   nome: z.string().nonempty(),
   fone: z.string().nonempty()
 })
+
+export const LocalDeAplicacaoSchema = z.object({
+  id: z.number().optional(),
+  nome: z.string().nonempty()
+})

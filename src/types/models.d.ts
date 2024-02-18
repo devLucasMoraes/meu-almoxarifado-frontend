@@ -61,6 +61,11 @@ export type TRequisitante = {
   fone: string
 }
 
+export type TLocalDeAplicacao = {
+  id: number
+  nome: string
+}
+
 export type TAutocompleteOption = {
   id: number
   label: string
