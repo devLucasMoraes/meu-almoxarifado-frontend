@@ -1,4 +1,5 @@
 'use client'
+import { Environment } from '@/environment'
 import { IDrawerOptions } from '@/types/layout'
 import {
   Category,
@@ -71,43 +72,43 @@ export const AppSideBar = () => {
     {
       label: 'Categorias',
       icon: <Category />,
-      path: '/dashboard/categorias',
+      path: Environment.CATEGORIAS.LIST_PAGE,
       group: 'Cadastro'
     },
     {
       label: 'Materiais',
       icon: <Inventory />,
-      path: '/dashboard/materiais',
+      path: Environment.MATERIAIS.LIST_PAGE,
       group: 'Cadastro'
     },
     {
       label: 'Fornecedoras',
       icon: <Factory />,
-      path: '/dashboard/fornecedoras',
+      path: Environment.FORNECEDORAS.LIST_PAGE,
       group: 'Cadastro'
     },
     {
       label: 'Transportadoras',
       icon: <LocalShipping />,
-      path: '/dashboard/transportadoras',
+      path: Environment.TRANSPORTADORAS.LIST_PAGE,
       group: 'Cadastro'
     },
     {
       label: 'Requisitantes',
       icon: <Man />,
-      path: '/dashboard/requisitantes',
+      path: Environment.REQUISITANTES.LIST_PAGE,
       group: 'Cadastro'
     },
     {
       label: 'Locais de Aplicaçao',
       icon: <Place />,
-      path: '/dashboard/locais',
+      path: Environment.LOCAIS_DE_APLICACAO.LIST_PAGE,
       group: 'Cadastro'
     },
     {
       label: 'NF-e de compra',
       icon: <ImportExport />,
-      path: '/dashboard/nfe_de_compra',
+      path: Environment.NFE_DE_COMPRA.LIST_PAGE,
       group: 'Compras'
     },
     {

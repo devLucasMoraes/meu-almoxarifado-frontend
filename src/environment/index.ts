@@ -16,11 +16,10 @@ const PagePaths = {
     CREATE_PAGE: '/dashboard/locais/create'
   },
   NFE_DE_COMPRA: {
-    LIST: '/nfe_de_compra',
-    SHOW: '/nfe_de_compra/show/',
-    EDIT: '/nfe_de_compra/edit/',
-    NEW: '/nfe_de_compra/new',
-    DELETE: '/nfe_de_compra/delete/'
+    LIST_PAGE: '/dashboard/nfe/compra',
+    SHOW_PAGE: '/dashboard/nfe/compra/id/show',
+    EDIT_PAGE: '/dashboard/nfe/compra/id/edit',
+    CREATE_PAGE: '/dashboard/nfe/compra/create'
   },
   REQUISICOES_DE_ESTOQUE: {
     LIST: '/requisicoes',

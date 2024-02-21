@@ -1,3 +1,4 @@
+import { Unidade } from '@/types/enum'
 import { z } from 'zod'
 
 export const ConversaoDeConsumoSchema = z.object({
@@ -65,4 +66,34 @@ export const RequisitanteSchema = z.object({
 export const LocalDeAplicacaoSchema = z.object({
   id: z.number().optional(),
   nome: z.string().nonempty()
+})
+
+export const ItemNfeDeCompraSchema = z.object({
+  idItem: z.number().optional(),
+  idMaterial: z.number(),
+  undCom: z.nativeEnum(Unidade),
+  quantCom: z.number(),
+  valorUntCom: z.number(),
+  valorIpi: z.number(),
+  descricaoFornecedora: z.string().optional(),
+  referenciaFornecedora: z.string().optional()
+})
+
+export const NfeDeCompraSchema = z.object({
+  id: z.number().optional(),
+  nfe: z.string().optional(),
+  chaveNfe: z.string().optional(),
+  dataEmissao: z.date().optional().nullable(),
+  dataRecebimento: z.date(),
+  valorFrete: z.number().optional(),
+  valorSeguro: z.number().optional(),
+  valorDesconto: z.number().optional(),
+  valorOutros: z.number().optional(),
+  valorTotalIpi: z.number().optional(),
+  valorTotalProdutos: z.number().optional(),
+  valorTotalNfe: z.number().optional(),
+  obs: z.string().optional(),
+  idTransportadora: z.number(),
+  idFornecedora: z.number(),
+  itens: z.array(ItemNfeDeCompraSchema)
 })

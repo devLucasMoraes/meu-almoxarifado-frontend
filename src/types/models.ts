@@ -1,3 +1,5 @@
+import { Unidade } from './enum'
+
 export type TConversaoDeConsumo = {
   idConversao: number
   undConsumo: string
@@ -64,6 +66,36 @@ export type TRequisitante = {
 export type TLocalDeAplicacao = {
   id: number
   nome: string
+}
+
+export type TItemNfeDeCompra = {
+  idItem: number
+  idMaterial: number
+  undCom: Unidade
+  quantCom: number
+  valorUntCom: number
+  valorIpi: number
+  descricaoFornecedora: string
+  referenciaFornecedora: string
+}
+
+export type TNfeDeCompra = {
+  id: number
+  nfe: string
+  chaveNfe: string
+  dataEmissao: Date
+  dataRecebimento: Date
+  valorFrete: number
+  valorSeguro: number
+  valorDesconto: number
+  valorOutros: number
+  valorTotalIpi: number
+  valorTotalProdutos: number
+  valorTotalNfe: number
+  obs: string
+  idTransportadora: number
+  idFornecedora: number
+  itens: TItemNfeDeCompra[]
 }
 
 export type TAutocompleteOption = {
