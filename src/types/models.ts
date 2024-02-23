@@ -79,6 +79,25 @@ export type TItemNfeDeCompra = {
   referenciaFornecedora: string
 }
 
+export type TItemRequisicaoDeEstoque = {
+  idItem: number
+  idMaterial: number
+  undConsumo: string
+  quantEntregue: number
+  valorUntEntregue: number
+}
+
+export type TRequisicaoDeEstoque = {
+  id: number
+  dataRequisicao: Date
+  valorTotal: number
+  obs: string
+  ordemProducao: string
+  idRequisitante: number
+  idLocalDeAplicacao: number
+  itens: TItemRequisicaoDeEstoque[]
+}
+
 export type TNfeDeCompra = {
   id: number
   nfe: string

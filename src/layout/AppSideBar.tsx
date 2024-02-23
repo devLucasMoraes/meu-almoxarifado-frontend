@@ -114,7 +114,7 @@ export const AppSideBar = () => {
     {
       label: 'Requisiçoes',
       icon: <ImportExport />,
-      path: '/dashboard/requisicoes',
+      path: Environment.REQUISICOES_DE_ESTOQUE.LIST_PAGE,
       group: 'Estoque'
     },
     {

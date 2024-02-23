@@ -22,11 +22,10 @@ const PagePaths = {
     CREATE_PAGE: '/dashboard/nfe/compra/create'
   },
   REQUISICOES_DE_ESTOQUE: {
-    LIST: '/requisicoes',
-    SHOW: '/requisicoes/show/',
-    EDIT: '/requisicoes/edit/',
-    NEW: '/requisicoes/new',
-    DELETE: '/requisicoes/delete/'
+    LIST_PAGE: '/dashboard/requisicoes',
+    SHOW_PAGE: '/dashboard/requisicoes/id/show',
+    EDIT_PAGE: '/dashboard/requisicoes/id/edit',
+    CREATE_PAGE: '/dashboard/requisicoes/create'
   },
   TRANSPORTADORAS: {
     LIST_PAGE: '/dashboard/transportadoras',

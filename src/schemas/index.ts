@@ -97,3 +97,20 @@ export const NfeDeCompraSchema = z.object({
   idFornecedora: z.number(),
   itens: z.array(ItemNfeDeCompraSchema)
 })
+
+export const ItemRequisicaoDeEstoqueSchema = z.object({
+  idItem: z.number().optional(),
+  idMaterial: z.number(),
+  undConsumo: z.string().nonempty(),
+  quantEntregue: z.number()
+})
+
+export const RequisicaoDeEstoqueSchema = z.object({
+  id: z.number().optional(),
+  dataRequisicao: z.date(),
+  obs: z.string().optional(),
+  ordemProducao: z.string().optional(),
+  idRequisitante: z.coerce.number(),
+  idLocalDeAplicacao: z.coerce.number(),
+  itens: z.array(ItemRequisicaoDeEstoqueSchema)
+})
