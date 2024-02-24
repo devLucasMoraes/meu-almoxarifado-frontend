@@ -7,3 +7,5 @@ export class FornecedoraQueries extends QueryBase<TFornecedora> {
     super('FORNECEDORA-KEY', new FornecedoraService())
   }
 }
+
+export const fornecedoraQueries = new FornecedoraQueries()

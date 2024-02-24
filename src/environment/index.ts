@@ -61,11 +61,18 @@ const PagePaths = {
     DELETE: '/vinculos/delete/'
   },
   EMPRESTIMO: {
-    LIST: '/emprestimos/a-pagar',
-    SHOW: '/emprestimos/a-pagar/show/',
-    EDIT: '/emprestimos/a-pagar/edit/',
-    NEW: '/emprestimos/a-pagar/new',
-    DELETE: '/emprestimos/a-pagar/delete/'
+    A_PAGAR: {
+      LIST_PAGE: '/dashboard/emprestimos/a-pagar',
+      SHOW_PAGE: '/dashboard/emprestimos/a-pagar/id/show',
+      EDIT_PAGE: '/dashboard/emprestimos/a-pagar/id/edit',
+      CREATE_PAGE: '/dashboard/emprestimos/a-pagar/create'
+    },
+    A_RECEBER: {
+      LIST_PAGE: '/dashboard/emprestimos/a-receber',
+      SHOW_PAGE: '/dashboard/emprestimos/a-receber/id/show',
+      EDIT_PAGE: '/dashboard/emprestimos/a-receber/id/edit',
+      CREATE_PAGE: '/dashboard/emprestimos/a-receber/create'
+    }
   }
 }
 

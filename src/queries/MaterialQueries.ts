@@ -7,3 +7,5 @@ export class MaterialQueries extends QueryBase<TMaterial> {
     super('MATERIAL-KEY', new MaterialService())
   }
 }
+
+export const materialQueries = new MaterialQueries()

@@ -1,4 +1,4 @@
-import { Unidade } from './enum'
+import { Situacao, Tipo, Unidade } from './enum'
 
 export type TConversaoDeConsumo = {
   idConversao: number
@@ -115,6 +115,34 @@ export type TNfeDeCompra = {
   idTransportadora: number
   idFornecedora: number
   itens: TItemNfeDeCompra[]
+}
+
+export type TItemEmprestimoAReceber = {
+  idItem: number
+  idMaterial: number
+  unidade: Unidade
+  quantEntregue: number
+  valorUnt: number
+}
+
+export type TItemEmprestimoAPagar = {
+  idItem: number
+  idMaterial: number
+  unidade: Unidade
+  quantEntregue: number
+  valorUnt: number
+}
+
+export type TEmprestimo = {
+  id: number
+  tipo: Tipo
+  atribuirAoEstoqueFisico: boolean
+  dataDeAbertura: Date
+  valorTotal: number
+  idFornecedora: number
+  situacao: Situacao
+  itensAReceber: TItemEmprestimoAReceber[]
+  itensAPagar: TItemEmprestimoAPagar[]
 }
 
 export type TAutocompleteOption = {

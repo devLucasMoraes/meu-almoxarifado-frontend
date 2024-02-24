@@ -1,4 +1,4 @@
-import { Unidade } from '@/types/enum'
+import { Situacao, Tipo, Unidade } from '@/types/enum'
 import { z } from 'zod'
 
 export const ConversaoDeConsumoSchema = z.object({
@@ -113,4 +113,24 @@ export const RequisicaoDeEstoqueSchema = z.object({
   idRequisitante: z.coerce.number(),
   idLocalDeAplicacao: z.coerce.number(),
   itens: z.array(ItemRequisicaoDeEstoqueSchema)
+})
+
+export const ItemEmprestimoSchema = z.object({
+  idItem: z.number().optional(),
+  idMaterial: z.number().optional(),
+  unidade: z.nativeEnum(Unidade),
+  quantEntregue: z.number().nonnegative(),
+  valorUnt: z.number().nonnegative()
+})
+
+export const EmprestimoSchema = z.object({
+  id: z.number().optional(),
+  tipo: z.nativeEnum(Tipo),
+  atribuirAoEstoqueFisico: z.boolean(),
+  dataDeAbertura: z.date(),
+  valorTotal: z.number().nonnegative(),
+  idFornecedora: z.number().nonnegative(),
+  situacao: z.nativeEnum(Situacao),
+  itensAReceber: z.array(ItemEmprestimoSchema).optional(),
+  itensAPagar: z.array(ItemEmprestimoSchema).optional()
 })
