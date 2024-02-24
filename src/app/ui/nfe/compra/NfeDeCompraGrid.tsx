@@ -1,5 +1,5 @@
-import { FornecedoraQueries } from '@/queries/FornecedoraQueries'
-import { TransportadoraQueries } from '@/queries/TransportadoraQueries'
+import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
+import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { TNfeDeCompra } from '@/types/models'
 import { Grid } from '@mui/material'
 import { Control } from 'react-hook-form'
@@ -7,9 +7,6 @@ import { RHFAutocompleteField } from '../../shared/components/RHFwithMUI/RHFAuto
 import { RHFDatePicker } from '../../shared/components/RHFwithMUI/RHFDatePicker'
 import { RHFTextField } from '../../shared/components/RHFwithMUI/RHFTextField'
 import { ItensNfeDeCompraArrayField } from './ItensNfeDeCompraArrayField'
-
-const fornecedoraQueries = new FornecedoraQueries()
-const transportadoraQueries = new TransportadoraQueries()
 
 export const NfeDeCompraGrid = ({ control, data }: { control: Control<TNfeDeCompra>; data?: TNfeDeCompra }) => {
   console.log('renderizou NfeDeCompraGrid')

@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { TransportadoraQueries } from '@/queries/TransportadoraQueries'
+import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { TransportadoraSchema } from '@/schemas'
 import { TTransportadora } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
 import { TransportadoraFormGrid } from './TransportadoraFormGrid'
-
-const transportadoraQueries = new TransportadoraQueries()
 
 export const TransportadoraForm = ({ data, id }: { data?: TTransportadora; id?: string }) => {
   console.log('renderizou TransportadoraForm')

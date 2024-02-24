@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { MaterialQueries } from '@/queries/MaterialQueries'
+import { materialQueries } from '@/queries/MaterialQueries'
 import { MaterialSchema } from '@/schemas'
 import { TMaterial } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
 import { MaterialFormGrid } from './MaterialFormGrid'
-
-const materialQueries = new MaterialQueries()
 
 export const MaterialForm = ({ data, id }: { data?: TMaterial; id?: string }) => {
   console.log('renderizou MaterialForm id', id)

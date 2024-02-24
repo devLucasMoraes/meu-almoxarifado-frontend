@@ -4,11 +4,9 @@ import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { RequisitanteQueries } from '@/queries/RequisitanteQueries'
+import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { TRequisitante } from '@/types/models'
 import { useQuery } from '@tanstack/react-query'
-
-const requisitanteQueries = new RequisitanteQueries()
 
 export default function Page({ params }: { params: { id: string } }) {
   console.log('renderizou RequisitanteShow')

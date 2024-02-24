@@ -1,14 +1,10 @@
 import { Environment } from '@/environment'
-import { FornecedoraQueries } from '@/queries/FornecedoraQueries'
-import { MaterialQueries } from '@/queries/MaterialQueries'
-import { TransportadoraQueries } from '@/queries/TransportadoraQueries'
+import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
+import { materialQueries } from '@/queries/MaterialQueries'
+import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { TNfeDeCompra } from '@/types/models'
 import { Grid, Paper, Typography } from '@mui/material'
 import { UnderlineLink } from '../../shared/components/UnderlineLink'
-
-const materialQueries = new MaterialQueries()
-const transportadoraQueries = new TransportadoraQueries()
-const fornecedoraQueries = new FornecedoraQueries()
 
 const { FORNECEDORAS, TRANSPORTADORAS, MATERIAIS } = Environment
 

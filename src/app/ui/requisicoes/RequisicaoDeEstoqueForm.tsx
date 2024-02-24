@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { RequisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
+import { requisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
 import { RequisicaoDeEstoqueSchema } from '@/schemas'
 import { TRequisicaoDeEstoque } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
 import { RequisicaoDeEstoqueGrid } from './RequisicaoDeEstoqueGrid'
-
-const requisicaoDeEstoqueQueries = new RequisicaoDeEstoqueQueries()
 
 export const RequisicaoDeEstoqueForm = ({ data, id }: { data?: TRequisicaoDeEstoque; id?: string }) => {
   console.log('renderizou RequisicaoDeEstoqueForm')

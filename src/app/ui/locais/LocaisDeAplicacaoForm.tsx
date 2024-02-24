@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { LocalDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
+import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
 import { LocalDeAplicacaoSchema } from '@/schemas'
 import { TLocalDeAplicacao } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
 import { LocaisDeAplicacaoFormGrid } from './LocaisDeAplicacaoFormGrid'
-
-const localDeAplicacaoQueries = new LocalDeAplicacaoQueries()
 
 export const LocaisDeAplicacaoForm = ({ data, id }: { data?: TLocalDeAplicacao; id?: string }) => {
   console.log('renderizou LocaisDeAplicacaoForm')

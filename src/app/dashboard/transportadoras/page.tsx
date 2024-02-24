@@ -3,7 +3,7 @@ import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { TransportadoraQueries } from '@/queries/TransportadoraQueries'
+import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { TTransportadora } from '@/types/models'
 import { Delete, Edit, Preview } from '@mui/icons-material'
 import { IconButton, Stack } from '@mui/material'
@@ -11,8 +11,6 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-const transportadoraQueries = new TransportadoraQueries()
 
 export default function Page() {
   console.log('renderizou TransportadoraList')

@@ -4,11 +4,9 @@ import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { transportadoraFields } from '@/app/ui/transportadoras/transportadoraFields'
 import { Environment } from '@/environment'
-import { TransportadoraQueries } from '@/queries/TransportadoraQueries'
+import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { TTransportadora } from '@/types/models'
 import { useQuery } from '@tanstack/react-query'
-
-const transportadoraQueries = new TransportadoraQueries()
 
 export default function Page({ params }: { params: { id: string } }) {
   console.log('renderizou TransportadoraShow')

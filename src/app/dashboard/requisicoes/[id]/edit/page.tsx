@@ -3,10 +3,8 @@ import { RequisicaoDeEstoqueForm } from '@/app/ui/requisicoes/RequisicaoDeEstoqu
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { RequisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
+import { requisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
 import { useQuery } from '@tanstack/react-query'
-
-const requisicaoDeEstoqueQueries = new RequisicaoDeEstoqueQueries()
 
 export default function Page({ params }: { params: { id: string } }) {
   console.log('renderizou RequisicaoDeEstoqueEdit')

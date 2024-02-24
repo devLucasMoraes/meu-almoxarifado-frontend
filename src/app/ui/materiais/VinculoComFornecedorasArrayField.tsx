@@ -1,6 +1,6 @@
 import { Environment } from '@/environment'
 import { useMyFieldArray } from '@/hooks/useMyFieldArray'
-import { FornecedoraQueries } from '@/queries/FornecedoraQueries'
+import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { TMaterial, TVinculoMaterialFornecedora } from '@/types/models'
 import { Delete, Edit, Factory, Preview } from '@mui/icons-material'
 import { Chip, Divider, Grid, IconButton, Paper, Stack } from '@mui/material'
@@ -11,8 +11,6 @@ import { MyDataGrid } from '../shared/components/MyDataGrid'
 import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
 import { ConversaoDeCompraArrayField } from './ConversaoDeCompraArrayField'
-
-const fornecedoraQueries = new FornecedoraQueries()
 
 export function VinculoComFornecedorasArrayField({ control }: { control: Control<TMaterial> }) {
   console.log('renderizou VinculoComFornecedorasArrayField')

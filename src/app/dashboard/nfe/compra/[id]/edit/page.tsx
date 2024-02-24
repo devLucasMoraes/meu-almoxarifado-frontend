@@ -3,10 +3,8 @@ import { NfeDeCompraForm } from '@/app/ui/nfe/compra/NfeDeCompraForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { NfeDeCompraQueries } from '@/queries/NfeDeCompraQueries'
+import { nfeDeCompraQueries } from '@/queries/NfeDeCompraQueries'
 import { useQuery } from '@tanstack/react-query'
-
-const nfeDeCompraQueries = new NfeDeCompraQueries()
 
 export default function Page({ params }: { params: { id: string } }) {
   console.log('renderizou NfeDeCompraEdit')

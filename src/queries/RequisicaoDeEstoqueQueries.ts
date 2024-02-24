@@ -2,8 +2,10 @@ import { RequisicaoDeEstoqueService } from '@/services/RequisicaoDeEstoqueServic
 import { TRequisicaoDeEstoque } from '@/types/models'
 import { QueryBase } from './QueryBase'
 
-export class RequisicaoDeEstoqueQueries extends QueryBase<TRequisicaoDeEstoque> {
+class RequisicaoDeEstoqueQueries extends QueryBase<TRequisicaoDeEstoque> {
   constructor() {
     super('REQUISICAO-KEY', new RequisicaoDeEstoqueService())
   }
 }
+
+export const requisicaoDeEstoqueQueries = new RequisicaoDeEstoqueQueries()

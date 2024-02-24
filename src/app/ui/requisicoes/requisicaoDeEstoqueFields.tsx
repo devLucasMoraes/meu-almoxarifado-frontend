@@ -1,14 +1,10 @@
 import { Environment } from '@/environment'
-import { LocalDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
-import { MaterialQueries } from '@/queries/MaterialQueries'
-import { RequisitanteQueries } from '@/queries/RequisitanteQueries'
+import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
+import { materialQueries } from '@/queries/MaterialQueries'
+import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { TRequisicaoDeEstoque } from '@/types/models'
 import { Grid, Paper, Typography } from '@mui/material'
 import { UnderlineLink } from '../shared/components/UnderlineLink'
-
-const localDeAplicacaoQueries = new LocalDeAplicacaoQueries()
-const requisitanteQueries = new RequisitanteQueries()
-const materialQueries = new MaterialQueries()
 
 const { REQUISITANTES, LOCAIS_DE_APLICACAO, MATERIAIS } = Environment
 

@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { RequisitanteQueries } from '@/queries/RequisitanteQueries'
+import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { RequisitanteSchema } from '@/schemas'
 import { TRequisitante } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
 import { RequisitanteFormGrid } from './RequisitanteFormGrid'
-
-const requisitanteQueries = new RequisitanteQueries()
 
 export const RequisitanteForm = ({ data, id }: { data?: TRequisitante; id?: string }) => {
   console.log('renderizou RequisitanteForm')

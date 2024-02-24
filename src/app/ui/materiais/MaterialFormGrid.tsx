@@ -1,4 +1,4 @@
-import { CategoriaQueries } from '@/queries/CategoriaQueries'
+import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { TMaterial } from '@/types/models'
 import { AddBoxSharp } from '@mui/icons-material'
 import { Grid, IconButton, Tooltip } from '@mui/material'
@@ -7,8 +7,6 @@ import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocom
 import { RHFCheckbox } from '../shared/components/RHFwithMUI/RHFCheckbox'
 import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
 import { VinculoComFornecedorasArrayField } from './VinculoComFornecedorasArrayField'
-
-const categoriaQueries = new CategoriaQueries()
 
 export const MaterialFormGrid = ({ control }: { control: Control<TMaterial> }) => {
   console.log('renderizou MaterialFormGrid')

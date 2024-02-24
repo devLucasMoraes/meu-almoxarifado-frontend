@@ -4,9 +4,9 @@ import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { UnderlineLink } from '@/app/ui/shared/components/UnderlineLink'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { LocalDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
-import { RequisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
-import { RequisitanteQueries } from '@/queries/RequisitanteQueries'
+import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
+import { requisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
+import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { TRequisicaoDeEstoque } from '@/types/models'
 import { Delete, Edit, Preview } from '@mui/icons-material'
 import { IconButton, Stack } from '@mui/material'
@@ -14,10 +14,6 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-const requisicaoDeEstoqueQueries = new RequisicaoDeEstoqueQueries()
-const requisitanteQueries = new RequisitanteQueries()
-const localDeAplicacaoQueries = new LocalDeAplicacaoQueries()
 
 export default function Page() {
   console.log('renderizou RequisicaoDeEstoqueList')

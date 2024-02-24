@@ -4,8 +4,8 @@ import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { UnderlineLink } from '@/app/ui/shared/components/UnderlineLink'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { CategoriaQueries } from '@/queries/CategoriaQueries'
-import { MaterialQueries } from '@/queries/MaterialQueries'
+import { categoriaQueries } from '@/queries/CategoriaQueries'
+import { materialQueries } from '@/queries/MaterialQueries'
 import { TMaterial } from '@/types/models'
 import { Delete, Edit, Preview } from '@mui/icons-material'
 import { IconButton, Stack } from '@mui/material'
@@ -13,9 +13,6 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-const materialQueries = new MaterialQueries()
-const categoriaQueries = new CategoriaQueries()
 
 export default function Page() {
   console.log('renderizou MaterialList')

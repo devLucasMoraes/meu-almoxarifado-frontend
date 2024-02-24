@@ -1,6 +1,6 @@
 import { Environment } from '@/environment'
 import { useMyFieldArray } from '@/hooks/useMyFieldArray'
-import { MaterialQueries } from '@/queries/MaterialQueries'
+import { materialQueries } from '@/queries/MaterialQueries'
 import { TRequisicaoDeEstoque } from '@/types/models'
 import { Delete, Edit, Inventory, Preview } from '@mui/icons-material'
 import { Chip, Divider, Grid, IconButton, Paper, Stack } from '@mui/material'
@@ -11,8 +11,6 @@ import { MyDataGrid } from '../shared/components/MyDataGrid'
 import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
 import { UnderlineLink } from '../shared/components/UnderlineLink'
-
-const materialQueries = new MaterialQueries()
 
 export const ItensRequisicaoDeEstoqueArrayField = ({ control }: { control: Control<TRequisicaoDeEstoque> }) => {
   console.log('renderizou')

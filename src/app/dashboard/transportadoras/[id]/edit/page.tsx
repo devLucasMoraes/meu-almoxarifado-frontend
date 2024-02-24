@@ -3,10 +3,8 @@ import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { TransportadoraForm } from '@/app/ui/transportadoras/TransportadoraForm'
 import { Environment } from '@/environment'
-import { TransportadoraQueries } from '@/queries/TransportadoraQueries'
+import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { useQuery } from '@tanstack/react-query'
-
-const transportadoraQueries = new TransportadoraQueries()
 
 export default function Page({ params }: { params: { id: string } }) {
   console.log('renderizou TransportadoraEdit')

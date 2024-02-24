@@ -1,5 +1,5 @@
-import { LocalDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
-import { RequisitanteQueries } from '@/queries/RequisitanteQueries'
+import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
+import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { TRequisicaoDeEstoque } from '@/types/models'
 import { Grid } from '@mui/material'
 import { Control } from 'react-hook-form'
@@ -7,9 +7,6 @@ import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocom
 import { RHFDatePicker } from '../shared/components/RHFwithMUI/RHFDatePicker'
 import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
 import { ItensRequisicaoDeEstoqueArrayField } from './ItensRequisicaoDeEstoqueArrayField'
-
-const requisitanteQueries = new RequisitanteQueries()
-const localDeAplicacaoQueries = new LocalDeAplicacaoQueries()
 
 export const RequisicaoDeEstoqueGrid = ({ control }: { control: Control<TRequisicaoDeEstoque> }) => {
   return (

@@ -3,7 +3,7 @@ import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { CategoriaQueries } from '@/queries/CategoriaQueries'
+import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { TCategoria } from '@/types/models'
 import { Delete, Edit, Preview } from '@mui/icons-material'
 import { IconButton, Stack } from '@mui/material'
@@ -11,8 +11,6 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-const categoriaQueries = new CategoriaQueries()
 
 export default function Page() {
   console.log('renderizou CategoriaList')

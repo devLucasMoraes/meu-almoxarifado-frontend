@@ -3,10 +3,8 @@ import { RequisitanteForm } from '@/app/ui/requisitantes/RequisitanteForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { RequisitanteQueries } from '@/queries/RequisitanteQueries'
+import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { useQuery } from '@tanstack/react-query'
-
-const requisitanteQueries = new RequisitanteQueries()
 
 export default function RequisitanteEdit({ params }: { params: { id: string } }) {
   console.log('renderizou RequisitanteEdit')

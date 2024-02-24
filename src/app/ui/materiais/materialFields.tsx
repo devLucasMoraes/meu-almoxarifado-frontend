@@ -1,12 +1,9 @@
 import { Environment } from '@/environment'
-import { CategoriaQueries } from '@/queries/CategoriaQueries'
-import { FornecedoraQueries } from '@/queries/FornecedoraQueries'
+import { categoriaQueries } from '@/queries/CategoriaQueries'
+import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { TMaterial } from '@/types/models'
 import { Grid, Paper, Typography } from '@mui/material'
 import { UnderlineLink } from '../shared/components/UnderlineLink'
-
-const categoriaQueries = new CategoriaQueries()
-const fornecedoraQueries = new FornecedoraQueries()
 
 const { CATEGORIAS, FORNECEDORAS } = Environment
 

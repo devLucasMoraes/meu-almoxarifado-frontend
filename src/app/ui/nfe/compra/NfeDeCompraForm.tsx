@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { NfeDeCompraQueries } from '@/queries/NfeDeCompraQueries'
+import { nfeDeCompraQueries } from '@/queries/NfeDeCompraQueries'
 import { NfeDeCompraSchema } from '@/schemas'
 import { TNfeDeCompra } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../../shared/components/crudTools/SaveSubmitButton'
 import { NfeDeCompraGrid } from './NfeDeCompraGrid'
-
-const nfeDeCompraQueries = new NfeDeCompraQueries()
 
 export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string }) => {
   console.log('renderizou TNfeDeCompra')

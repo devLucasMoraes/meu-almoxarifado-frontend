@@ -3,10 +3,8 @@ import { LocaisDeAplicacaoForm } from '@/app/ui/locais/LocaisDeAplicacaoForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { LocalDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
+import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
 import { useQuery } from '@tanstack/react-query'
-
-const localDeAplicacaoQueries = new LocalDeAplicacaoQueries()
 
 export default function LocaisDeAplicacaoEdit({ params }: { params: { id: string } }) {
   console.log('renderizou LocaisDeAplicacaoEdit')

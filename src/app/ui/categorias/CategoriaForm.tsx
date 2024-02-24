@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { CategoriaQueries } from '@/queries/CategoriaQueries'
+import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { CategoriaSchema } from '@/schemas'
 import { TCategoria } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
 import { CategoriaFormGrid } from './CategoriaFormGrid'
-
-const categoriaQueries = new CategoriaQueries()
 
 export const CategoriaForm = ({ data, id }: { data?: TCategoria; id?: string }) => {
   console.log('renderizou CategoriaForm')

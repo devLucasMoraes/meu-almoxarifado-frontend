@@ -1,6 +1,6 @@
 'use client'
 import { Environment } from '@/environment'
-import { FornecedoraQueries } from '@/queries/FornecedoraQueries'
+import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { FornecedoraSchema } from '@/schemas'
 import { TFornecedora } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,8 +11,6 @@ import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
 import { FornecedoraFormGrid } from './FornecedoraFormGrid'
-
-const fornecedoraQueries = new FornecedoraQueries()
 
 export const FornecedoraForm = ({ data, id }: { data?: TFornecedora; id?: string }) => {
   console.log('renderizou FornecedoraForm')

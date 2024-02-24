@@ -3,10 +3,8 @@ import { CategoriaForm } from '@/app/ui/categorias/CategoriaForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
-import { CategoriaQueries } from '@/queries/CategoriaQueries'
+import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { useQuery } from '@tanstack/react-query'
-
-const categoriaQueries = new CategoriaQueries()
 
 export default function Page({ params }: { params: { id: string } }) {
   console.log('renderizou CategoriaEdit')
