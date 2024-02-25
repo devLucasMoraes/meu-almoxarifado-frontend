@@ -1,9 +1,10 @@
 import { Environment } from '@/environment'
 import { useMyFieldArray } from '@/hooks/useMyFieldArray'
 import { materialQueries } from '@/queries/MaterialQueries'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TRequisicaoDeEstoque } from '@/types/models'
-import { Delete, Edit, Inventory, Preview } from '@mui/icons-material'
-import { Chip, Divider, Grid, IconButton, Paper, Stack } from '@mui/material'
+import { AddBoxSharp, Delete, Edit, Inventory, Preview } from '@mui/icons-material'
+import { Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import { useState } from 'react'
 import { Control, FieldArrayWithId } from 'react-hook-form'
@@ -16,6 +17,8 @@ export const ItensRequisicaoDeEstoqueArrayField = ({ control }: { control: Contr
   console.log('renderizou')
 
   const { LIMITE_DE_LINHAS, MATERIAIS } = Environment
+
+  const { toggleMaterialDialog } = useIsOpenDialog()
 
   const { fields, handleAddItem, handleInfo, handleEdit, handleDelete, handleBlur, selectedItemIndex, readOnly } =
     useMyFieldArray({
@@ -94,8 +97,14 @@ export const ItensRequisicaoDeEstoqueArrayField = ({ control }: { control: Contr
               rowGap={2}
               columnSpacing={1}
               sx={{ backgroundColor: '#f6f7fb' }}
+              alignItems='flex-end'
             >
-              <Grid item xs={10} lg={4}>
+              <Grid item xs={10} lg={4} textAlign='end'>
+                <Tooltip title='Novo Material / Insumo'>
+                  <IconButton color='primary' size='small' onClick={() => toggleMaterialDialog(true)}>
+                    <AddBoxSharp />
+                  </IconButton>
+                </Tooltip>
                 <RHFAutocompleteField
                   control={control}
                   name={`itens.${originalIndex}.idMaterial`}

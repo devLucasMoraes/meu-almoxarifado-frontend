@@ -1,9 +1,10 @@
 import { Environment } from '@/environment'
 import { useMyFieldArray } from '@/hooks/useMyFieldArray'
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TMaterial, TVinculoMaterialFornecedora } from '@/types/models'
-import { Delete, Edit, Factory, Preview } from '@mui/icons-material'
-import { Chip, Divider, Grid, IconButton, Paper, Stack } from '@mui/material'
+import { AddBoxSharp, Delete, Edit, Factory, Preview } from '@mui/icons-material'
+import { Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import { useState } from 'react'
 import { Control, FieldArrayWithId } from 'react-hook-form'
@@ -16,6 +17,8 @@ export function VinculoComFornecedorasArrayField({ control }: { control: Control
   console.log('renderizou VinculoComFornecedorasArrayField')
 
   const { LIMITE_DE_LINHAS } = Environment
+
+  const { toggleFornecedoraDialog } = useIsOpenDialog()
 
   const { fields, handleAddItem, handleInfo, handleEdit, handleDelete, handleBlur, selectedItemIndex, readOnly } =
     useMyFieldArray({
@@ -76,8 +79,21 @@ export function VinculoComFornecedorasArrayField({ control }: { control: Control
         .map(field => {
           const originalIndex = fields.indexOf(field)
           return (
-            <Grid key={field.id} container rowGap={2} padding={2} component={Paper} sx={{ backgroundColor: '#f6f7fb' }}>
-              <Grid item xs={10}>
+            <Grid
+              key={field.id}
+              container
+              rowGap={2}
+              padding={2}
+              component={Paper}
+              sx={{ backgroundColor: '#f6f7fb' }}
+              alignItems='flex-end'
+            >
+              <Grid item xs={10} textAlign='end'>
+                <Tooltip title='Nova Fornecedora'>
+                  <IconButton color='primary' size='small' onClick={() => toggleFornecedoraDialog(true)}>
+                    <AddBoxSharp />
+                  </IconButton>
+                </Tooltip>
                 <RHFAutocompleteField
                   queries={fornecedoraQueries}
                   control={control}

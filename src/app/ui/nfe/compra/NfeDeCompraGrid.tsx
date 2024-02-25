@@ -1,7 +1,9 @@
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { transportadoraQueries } from '@/queries/TransportadoraQueries'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TNfeDeCompra } from '@/types/models'
-import { Grid } from '@mui/material'
+import { AddBoxSharp } from '@mui/icons-material'
+import { Grid, IconButton, Tooltip } from '@mui/material'
 import { Control } from 'react-hook-form'
 import { RHFAutocompleteField } from '../../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFDatePicker } from '../../shared/components/RHFwithMUI/RHFDatePicker'
@@ -15,8 +17,10 @@ export const NfeDeCompraGrid = ({ control, data }: { control: Control<TNfeDeComp
 
   //const { data: transportadora } = useTransportadoraGetById(data?.idTransportadora)
 
+  const { isOpen, toggleFornecedoraDialog, toggleTransportadoraDialog } = useIsOpenDialog()
+
   return (
-    <Grid container rowGap={2} marginBottom={2} columnSpacing={1}>
+    <Grid container rowGap={2} marginBottom={2} columnSpacing={1} alignItems='flex-end'>
       <Grid item xs={12} lg={3}>
         <RHFTextField control={control} name='nfe' placeholder='NFe' />
       </Grid>
@@ -65,7 +69,12 @@ export const NfeDeCompraGrid = ({ control, data }: { control: Control<TNfeDeComp
         />
       </Grid>
 
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={3} textAlign='end'>
+        <Tooltip title='Nova Fornecedora'>
+          <IconButton color='primary' size='small' onClick={() => toggleFornecedoraDialog(true)}>
+            <AddBoxSharp />
+          </IconButton>
+        </Tooltip>
         <RHFAutocompleteField
           control={control}
           name='idFornecedora'
@@ -78,7 +87,12 @@ export const NfeDeCompraGrid = ({ control, data }: { control: Control<TNfeDeComp
         <RHFTextField control={control} name='valorFrete' placeholder='Valor do frete' type='number' fullWidth />
       </Grid>
 
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={3} textAlign='end'>
+        <Tooltip title='Nova Transportadora'>
+          <IconButton color='primary' size='small' onClick={() => toggleTransportadoraDialog(true)}>
+            <AddBoxSharp />
+          </IconButton>
+        </Tooltip>
         <RHFAutocompleteField
           control={control}
           name='idTransportadora'

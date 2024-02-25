@@ -2,6 +2,7 @@
 import { Environment } from '@/environment'
 import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { CategoriaSchema } from '@/schemas'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TCategoria } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
@@ -17,7 +18,7 @@ export const CategoriaForm = ({ data, id }: { data?: TCategoria; id?: string }) 
 
   const { CATEGORIAS } = Environment
 
-  //const { isOpenNewCategoriaDialog, setIsOpenNewCategoriaDialog } = useDialogContext();
+  const { isOpen, toggleCategoriaDialog } = useIsOpenDialog()
 
   const { handleSubmit, setValue, watch, control } = useForm<TCategoria>({
     criteriaMode: 'all',
@@ -47,9 +48,8 @@ export const CategoriaForm = ({ data, id }: { data?: TCategoria; id?: string }) 
     if (!id) {
       create(data, {
         onSuccess: response => {
-          //setIsOpenNewCategoriaDialog(false);
-          //!isOpenNewCategoriaDialog && navigate(`${Environment.CATEGORIAS.SHOW}${Number(response.id)}`);
-          router.push(`${CATEGORIAS.SHOW_PAGE.replace('id', response.id.toString())}`)
+          !isOpen.categoriaDialog && router.push(`${CATEGORIAS.SHOW_PAGE.replace('id', response.id.toString())}`)
+          toggleCategoriaDialog(false)
         }
       })
     } else {
@@ -70,7 +70,7 @@ export const CategoriaForm = ({ data, id }: { data?: TCategoria; id?: string }) 
 
       <Stack spacing={2} direction='row' justifyContent='end'>
         <SaveSubmitButton />
-        <CancelButton isPreviousRoute={true} />
+        <CancelButton isPreviousRoute={!isOpen.categoriaDialog} handleCancel={() => toggleCategoriaDialog(false)} />
       </Stack>
     </Box>
   )

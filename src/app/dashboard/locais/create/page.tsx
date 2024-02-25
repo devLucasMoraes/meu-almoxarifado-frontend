@@ -1,4 +1,4 @@
-import { LocaisDeAplicacaoForm } from '@/app/ui/locais/LocaisDeAplicacaoForm'
+import { LocalDeAplicacaoForm } from '@/app/ui/locais/LocalDeAplicacaoForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { Environment } from '@/environment'
 
@@ -12,7 +12,7 @@ export default function LocaisDeAplicacaoCreate() {
       pageTitle='Novo Local de Aplicação'
       breadcrumbsPath={[{ label: 'Locais', to: `${LOCAIS_DE_APLICACAO.LIST_PAGE}` }, { label: 'Novo' }]}
     >
-      <LocaisDeAplicacaoForm />
+      <LocalDeAplicacaoForm />
     </BasePageLayout>
   )
 }

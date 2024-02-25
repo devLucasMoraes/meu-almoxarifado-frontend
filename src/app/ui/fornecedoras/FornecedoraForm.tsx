@@ -2,6 +2,7 @@
 import { Environment } from '@/environment'
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { FornecedoraSchema } from '@/schemas'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TFornecedora } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
@@ -17,7 +18,7 @@ export const FornecedoraForm = ({ data, id }: { data?: TFornecedora; id?: string
 
   const { FORNECEDORAS } = Environment
 
-  //const { isOpenNewFornecedoraDialog, setIsOpenNewFornecedoraDialog } = useDialogContext()
+  const { isOpen, toggleFornecedoraDialog } = useIsOpenDialog()
 
   const { handleSubmit, setValue, control } = useForm<TFornecedora>({
     criteriaMode: 'all',
@@ -45,9 +46,8 @@ export const FornecedoraForm = ({ data, id }: { data?: TFornecedora; id?: string
     if (!id) {
       create(data, {
         onSuccess: response => {
-          router.push(`${FORNECEDORAS.SHOW_PAGE.replace('id', String(response.id))}`)
-          //setIsOpenNewFornecedoraDialog(false)
-          //!isOpenNewFornecedoraDialog && router(`${Environment.FORNECEDORAS.SHOW}${Number(response.id)}`)
+          !isOpen.fornecedoraDialog && router.push(`${FORNECEDORAS.SHOW_PAGE.replace('id', String(response.id))}`)
+          toggleFornecedoraDialog(false)
         }
       })
     } else {
@@ -68,7 +68,7 @@ export const FornecedoraForm = ({ data, id }: { data?: TFornecedora; id?: string
 
       <Stack spacing={2} direction='row' justifyContent='end'>
         <SaveSubmitButton />
-        <CancelButton isPreviousRoute />
+        <CancelButton isPreviousRoute={!isOpen.fornecedoraDialog} handleCancel={() => toggleFornecedoraDialog(false)} />
       </Stack>
     </Box>
   )

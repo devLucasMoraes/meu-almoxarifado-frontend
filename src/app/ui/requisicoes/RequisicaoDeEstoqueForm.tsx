@@ -2,20 +2,27 @@
 import { Environment } from '@/environment'
 import { requisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
 import { RequisicaoDeEstoqueSchema } from '@/schemas'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TRequisicaoDeEstoque } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { LocalDeAplicacaoForm } from '../locais/LocalDeAplicacaoForm'
+import { MaterialForm } from '../materiais/MaterialForm'
+import { RequisitanteForm } from '../requisitantes/RequisitanteForm'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
+import { CreateDialog } from '../shared/components/dialogs/CreateDialog'
 import { RequisicaoDeEstoqueGrid } from './RequisicaoDeEstoqueGrid'
 
 export const RequisicaoDeEstoqueForm = ({ data, id }: { data?: TRequisicaoDeEstoque; id?: string }) => {
   console.log('renderizou RequisicaoDeEstoqueForm')
 
   const { REQUISICOES_DE_ESTOQUE } = Environment
+
+  const { isOpen, toggleLocalDeAplicacaoDialog, toggleRequisitanteDialog, toggleMaterialDialog } = useIsOpenDialog()
 
   const { handleSubmit, setValue, control } = useForm<TRequisicaoDeEstoque>({
     criteriaMode: 'all',
@@ -62,13 +69,39 @@ export const RequisicaoDeEstoqueForm = ({ data, id }: { data?: TRequisicaoDeEsto
   }
 
   return (
-    <Box component='form' autoComplete='off' noValidate onSubmit={handleSubmit(onSubmit)} sx={{ p: 4 }}>
-      <RequisicaoDeEstoqueGrid control={control} />
+    <>
+      <CreateDialog
+        isOpen={isOpen.localDeAplicacaoDialog}
+        title='Novo Local de Aplicação'
+        onClose={() => toggleLocalDeAplicacaoDialog(false)}
+      >
+        <LocalDeAplicacaoForm />
+      </CreateDialog>
 
-      <Stack spacing={2} direction='row' justifyContent='end'>
-        <SaveSubmitButton />
-        <CancelButton isPreviousRoute />
-      </Stack>
-    </Box>
+      <CreateDialog
+        isOpen={isOpen.requisitanteDialog}
+        title='Novo Requisitante'
+        onClose={() => toggleRequisitanteDialog(false)}
+      >
+        <RequisitanteForm />
+      </CreateDialog>
+
+      <CreateDialog
+        isOpen={isOpen.materialDialog}
+        title='Novo Material/Insummo'
+        onClose={() => toggleMaterialDialog(false)}
+      >
+        <MaterialForm />
+      </CreateDialog>
+
+      <Box component='form' autoComplete='off' noValidate onSubmit={handleSubmit(onSubmit)} sx={{ p: 4 }}>
+        <RequisicaoDeEstoqueGrid control={control} />
+
+        <Stack spacing={2} direction='row' justifyContent='end'>
+          <SaveSubmitButton />
+          <CancelButton isPreviousRoute />
+        </Stack>
+      </Box>
+    </>
   )
 }

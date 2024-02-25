@@ -2,6 +2,7 @@
 import { Environment } from '@/environment'
 import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
 import { LocalDeAplicacaoSchema } from '@/schemas'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TLocalDeAplicacao } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
@@ -10,12 +11,14 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { CancelButton } from '../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
-import { LocaisDeAplicacaoFormGrid } from './LocaisDeAplicacaoFormGrid'
+import { LocalDeAplicacaoFormGrid } from './LocalDeAplicacaoFormGrid'
 
-export const LocaisDeAplicacaoForm = ({ data, id }: { data?: TLocalDeAplicacao; id?: string }) => {
+export const LocalDeAplicacaoForm = ({ data, id }: { data?: TLocalDeAplicacao; id?: string }) => {
   console.log('renderizou LocaisDeAplicacaoForm')
 
   const { LOCAIS_DE_APLICACAO } = Environment
+
+  const { isOpen, toggleLocalDeAplicacaoDialog } = useIsOpenDialog()
 
   const { handleSubmit, setValue, control } = useForm<TLocalDeAplicacao>({
     criteriaMode: 'all',
@@ -40,9 +43,9 @@ export const LocaisDeAplicacaoForm = ({ data, id }: { data?: TLocalDeAplicacao; 
     if (!id) {
       create(data, {
         onSuccess: response => {
-          router.push(`${LOCAIS_DE_APLICACAO.SHOW_PAGE.replace('id', String(response.id))}`)
-          //setIsOpenNewFornecedoraDialog(false)
-          //!isOpenNewFornecedoraDialog && router(`${Environment.FORNECEDORAS.SHOW}${Number(response.id)}`)
+          !isOpen.localDeAplicacaoDialog &&
+            router.push(`${LOCAIS_DE_APLICACAO.SHOW_PAGE.replace('id', String(response.id))}`)
+          toggleLocalDeAplicacaoDialog(false)
         }
       })
     } else {
@@ -51,8 +54,6 @@ export const LocaisDeAplicacaoForm = ({ data, id }: { data?: TLocalDeAplicacao; 
         {
           onSuccess: response => {
             router.push(`${LOCAIS_DE_APLICACAO.SHOW_PAGE.replace('id', String(response.id))}`)
-            //setIsOpenNewFornecedoraDialog(false)
-            //!isOpenNewFornecedoraDialog && router(`${Environment.FORNECEDORAS.SHOW}${Number(response.id)}`)
           }
         }
       )
@@ -61,11 +62,14 @@ export const LocaisDeAplicacaoForm = ({ data, id }: { data?: TLocalDeAplicacao; 
 
   return (
     <Box component='form' autoComplete='off' noValidate onSubmit={handleSubmit(onSubmit)} sx={{ p: 4 }}>
-      <LocaisDeAplicacaoFormGrid control={control} />
+      <LocalDeAplicacaoFormGrid control={control} />
 
       <Stack spacing={2} direction='row' justifyContent='end'>
         <SaveSubmitButton />
-        <CancelButton isPreviousRoute />
+        <CancelButton
+          isPreviousRoute={!isOpen.localDeAplicacaoDialog}
+          handleCancel={() => toggleLocalDeAplicacaoDialog(false)}
+        />
       </Stack>
     </Box>
   )

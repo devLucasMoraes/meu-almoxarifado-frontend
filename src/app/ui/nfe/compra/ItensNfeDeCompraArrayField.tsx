@@ -1,9 +1,10 @@
 import { Environment } from '@/environment'
 import { useMyFieldArray } from '@/hooks/useMyFieldArray'
 import { materialQueries } from '@/queries/MaterialQueries'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TNfeDeCompra } from '@/types/models'
-import { Delete, Edit, Inventory, Preview } from '@mui/icons-material'
-import { Chip, Divider, Grid, IconButton, Paper, Stack } from '@mui/material'
+import { AddBoxSharp, Delete, Edit, Inventory, Preview } from '@mui/icons-material'
+import { Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import { useState } from 'react'
 import { Control, FieldArrayWithId } from 'react-hook-form'
@@ -13,7 +14,10 @@ import { RHFTextField } from '../../shared/components/RHFwithMUI/RHFTextField'
 import { UnderlineLink } from '../../shared/components/UnderlineLink'
 
 export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeDeCompra> }) => {
+  console.log('renderizou ItensNfeDeCompraArrayField')
   //const { isOpenNewMaterialDialog, setIsOpenNewMaterialDialog, setNewMaterialDialogContent } = useDialogContext()
+
+  const { toggleMaterialDialog } = useIsOpenDialog()
 
   //const { nfeXMLFile, fornecedoraXMLFile } = useFileHandleContext()
 
@@ -205,8 +209,9 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
               rowGap={2}
               columnSpacing={1}
               sx={{ backgroundColor: '#f6f7fb' }}
+              alignItems='flex-end'
             >
-              <Grid item xs={12} lg={3}>
+              <Grid item xs={12} lg={4}>
                 <RHFTextField
                   control={control}
                   name={`itens.${originalIndex}.referenciaFornecedora`}
@@ -217,7 +222,7 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
                 />
               </Grid>
 
-              <Grid item xs={10} lg={3}>
+              <Grid item xs={10} lg={5}>
                 <RHFTextField
                   control={control}
                   name={`itens.${originalIndex}.descricaoFornecedora`}
@@ -228,7 +233,12 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
                 />
               </Grid>
 
-              <Grid item xs={12} lg={3} display='flex'>
+              <Grid item xs={12} lg={3} textAlign='end'>
+                <Tooltip title='Novo material'>
+                  <IconButton color='primary' size='small' onClick={() => toggleMaterialDialog(true)}>
+                    <AddBoxSharp />
+                  </IconButton>
+                </Tooltip>
                 <RHFAutocompleteField
                   control={control}
                   name={`itens.${originalIndex}.idMaterial`}
@@ -237,11 +247,6 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
                   onBlur={() => handleBlur(originalIndex)}
                   //readOnly={vinculoStatus}
                 />
-                {/*    <Tooltip title='Novo material'>
-                  <IconButton color='primary' size='small' onClick={() => openNewDialog(field)}>
-                    <AddBoxSharp />
-                  </IconButton>
-                </Tooltip> */}
               </Grid>
 
               {/*              <Grid item xs={12} lg={3}>

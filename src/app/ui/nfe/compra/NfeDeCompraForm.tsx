@@ -2,14 +2,19 @@
 import { Environment } from '@/environment'
 import { nfeDeCompraQueries } from '@/queries/NfeDeCompraQueries'
 import { NfeDeCompraSchema } from '@/schemas'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TNfeDeCompra } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { FornecedoraForm } from '../../fornecedoras/FornecedoraForm'
+import { MaterialForm } from '../../materiais/MaterialForm'
 import { CancelButton } from '../../shared/components/crudTools/CancelButton'
 import { SaveSubmitButton } from '../../shared/components/crudTools/SaveSubmitButton'
+import { CreateDialog } from '../../shared/components/dialogs/CreateDialog'
+import { TransportadoraForm } from '../../transportadoras/TransportadoraForm'
 import { NfeDeCompraGrid } from './NfeDeCompraGrid'
 
 export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string }) => {
@@ -17,15 +22,7 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
 
   const { NFE_DE_COMPRA } = Environment
 
-  /*   const {
-    isOpenNewMaterialDialog,
-    setIsOpenNewMaterialDialog,
-    newMaterialDialogContent,
-    isOpenNewFornecedoraDialog,
-    setIsOpenNewFornecedoraDialog,
-    isOpenNewTransportadoraDialog,
-    setIsOpenNewTransportadoraDialog
-  } = useDialogContext() */
+  const { isOpen, toggleFornecedoraDialog, toggleMaterialDialog, toggleTransportadoraDialog } = useIsOpenDialog()
 
   //const { fornecedoraXMLFile, transportadoraXMLFile } = useFileHandleContext()
 
@@ -94,27 +91,30 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
 
   return (
     <>
-      {/*      <NewDialog<TFornecedoraSchema>
-        newDialogOpen={isOpenNewFornecedoraDialog}
+      <CreateDialog
+        isOpen={isOpen.fornecedoraDialog}
         title='Nova Fornecedora'
-        FormComponent={FornecedoraForm}
-        data={fornecedoraXMLFile}
-        onClose={() => setIsOpenNewFornecedoraDialog(false)}
-      />
-      <NewDialog<TTransportadoraSchema>
-        newDialogOpen={isOpenNewTransportadoraDialog}
+        onClose={() => toggleFornecedoraDialog(false)}
+      >
+        <FornecedoraForm />
+      </CreateDialog>
+
+      <CreateDialog
+        isOpen={isOpen.transportadoraDialog}
         title='Nova Transportadora'
-        FormComponent={TransportadoraForm}
-        data={transportadoraXMLFile}
-        onClose={() => setIsOpenNewTransportadoraDialog(false)}
-      />
-      <NewDialog<TMaterial>
-        newDialogOpen={isOpenNewMaterialDialog}
+        onClose={() => toggleTransportadoraDialog(false)}
+      >
+        <TransportadoraForm />
+      </CreateDialog>
+
+      <CreateDialog
+        isOpen={isOpen.materialDialog}
         title='Novo Material/Insummo'
-        FormComponent={MaterialForm}
-        data={newMaterialDialogContent}
-        onClose={() => setIsOpenNewMaterialDialog(false)}
-      /> */}
+        onClose={() => toggleMaterialDialog(false)}
+      >
+        <MaterialForm />
+      </CreateDialog>
+
       <Box component='form' autoComplete='off' noValidate onSubmit={handleSubmit(onSubmit)} sx={{ p: 4 }}>
         <NfeDeCompraGrid control={control} />
 

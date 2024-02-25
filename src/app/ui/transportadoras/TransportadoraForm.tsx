@@ -2,6 +2,7 @@
 import { Environment } from '@/environment'
 import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { TransportadoraSchema } from '@/schemas'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TTransportadora } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
@@ -15,9 +16,9 @@ import { TransportadoraFormGrid } from './TransportadoraFormGrid'
 export const TransportadoraForm = ({ data, id }: { data?: TTransportadora; id?: string }) => {
   console.log('renderizou TransportadoraForm')
 
-  //const { isOpenNewTransportadoraDialog, setIsOpenNewTransportadoraDialog } = useDialogContext()
-
   const { TRANSPORTADORAS } = Environment
+
+  const { isOpen, toggleTransportadoraDialog } = useIsOpenDialog()
 
   const { handleSubmit, setValue, control } = useForm<TTransportadora>({
     criteriaMode: 'all',
@@ -45,9 +46,8 @@ export const TransportadoraForm = ({ data, id }: { data?: TTransportadora; id?: 
     if (!id) {
       create(data, {
         onSuccess: response => {
-          //setIsOpenNewTransportadoraDialog(false)
-          //!isOpenNewTransportadoraDialog && router(`${TRANSPORTADORAS.SHOW}${Number(response.id)}`)
-          router.push(`${TRANSPORTADORAS.SHOW_PAGE.replace('id', String(response.id))}`)
+          !isOpen.transportadoraDialog && router.push(`${TRANSPORTADORAS.SHOW_PAGE.replace('id', String(response.id))}`)
+          toggleTransportadoraDialog(false)
         }
       })
     } else {
@@ -68,7 +68,10 @@ export const TransportadoraForm = ({ data, id }: { data?: TTransportadora; id?: 
 
       <Stack spacing={2} direction='row' justifyContent='end'>
         <SaveSubmitButton />
-        <CancelButton isPreviousRoute />
+        <CancelButton
+          isPreviousRoute={!isOpen.transportadoraDialog}
+          handleCancel={() => toggleTransportadoraDialog(false)}
+        />
       </Stack>
     </Box>
   )

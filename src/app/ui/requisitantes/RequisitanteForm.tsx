@@ -2,6 +2,7 @@
 import { Environment } from '@/environment'
 import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { RequisitanteSchema } from '@/schemas'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TRequisitante } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Stack } from '@mui/material'
@@ -16,6 +17,8 @@ export const RequisitanteForm = ({ data, id }: { data?: TRequisitante; id?: stri
   console.log('renderizou RequisitanteForm')
 
   const { REQUISITANTES } = Environment
+
+  const { isOpen, toggleRequisitanteDialog } = useIsOpenDialog()
 
   const { handleSubmit, setValue, control } = useForm<TRequisitante>({
     criteriaMode: 'all',
@@ -41,9 +44,8 @@ export const RequisitanteForm = ({ data, id }: { data?: TRequisitante; id?: stri
     if (!id) {
       create(data, {
         onSuccess: response => {
-          router.push(`${REQUISITANTES.SHOW_PAGE.replace('id', String(response.id))}`)
-          //setIsOpenNewFornecedoraDialog(false)
-          //!isOpenNewFornecedoraDialog && router(`${Environment.FORNECEDORAS.SHOW}${Number(response.id)}`)
+          !isOpen.requisitanteDialog && router.push(`${REQUISITANTES.SHOW_PAGE.replace('id', String(response.id))}`)
+          toggleRequisitanteDialog(false)
         }
       })
     } else {
@@ -64,7 +66,10 @@ export const RequisitanteForm = ({ data, id }: { data?: TRequisitante; id?: stri
 
       <Stack spacing={2} direction='row' justifyContent='end'>
         <SaveSubmitButton />
-        <CancelButton isPreviousRoute />
+        <CancelButton
+          isPreviousRoute={!isOpen.requisitanteDialog}
+          handleCancel={() => toggleRequisitanteDialog(false)}
+        />
       </Stack>
     </Box>
   )

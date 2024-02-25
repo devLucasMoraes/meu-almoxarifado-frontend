@@ -1,5 +1,5 @@
 'use client'
-import { LocaisDeAplicacaoForm } from '@/app/ui/locais/LocaisDeAplicacaoForm'
+import { LocalDeAplicacaoForm } from '@/app/ui/locais/LocalDeAplicacaoForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
@@ -36,7 +36,7 @@ export default function LocaisDeAplicacaoEdit({ params }: { params: { id: string
         />
       }
     >
-      <LocaisDeAplicacaoForm data={local} id={id} />
+      <LocalDeAplicacaoForm data={local} id={id} />
     </BasePageLayout>
   )
 }

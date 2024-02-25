@@ -1,4 +1,5 @@
 import { categoriaQueries } from '@/queries/CategoriaQueries'
+import { useIsOpenDialog } from '@/store/dialogStore'
 import { TMaterial } from '@/types/models'
 import { AddBoxSharp } from '@mui/icons-material'
 import { Grid, IconButton, Tooltip } from '@mui/material'
@@ -11,29 +12,26 @@ import { VinculoComFornecedorasArrayField } from './VinculoComFornecedorasArrayF
 export const MaterialFormGrid = ({ control }: { control: Control<TMaterial> }) => {
   console.log('renderizou MaterialFormGrid')
 
-  /*   const {
-      setIsOpenNewCategoriaDialog,
-      isOpenNewMaterialDialog,
-    } = useDialogContext(); */
+  const { isOpen, toggleCategoriaDialog } = useIsOpenDialog()
 
   return (
-    <Grid container rowGap={2} columnSpacing={1} marginBottom={2}>
-      <Grid item xs={10} lg={6}>
+    <Grid container rowGap={2} columnSpacing={1} marginBottom={2} alignItems='flex-end'>
+      <Grid item xs={10} lg={isOpen.materialDialog ? 12 : 6}>
         <RHFTextField control={control} name='descricao' fullWidth placeholder='Descriçao' />
       </Grid>
 
-      <Grid item xs={10} lg={6}>
+      <Grid item xs={10} lg={isOpen.materialDialog ? 12 : 6}>
         <RHFTextField control={control} name='valorUntMed' placeholder='Valor unitário' />
         <RHFCheckbox control={control} name={'valorUntMedAuto'} />
       </Grid>
 
-      <Grid item xs={10} lg={6} display='flex'>
-        <RHFAutocompleteField control={control} name='idCategoria' queries={categoriaQueries} placeholder='Categoria' />
+      <Grid item xs={10} lg={isOpen.materialDialog ? 12 : 6} textAlign='end'>
         <Tooltip title='Nova Categoria'>
-          <IconButton color='primary' size='small'>
+          <IconButton color='primary' size='small' onClick={() => toggleCategoriaDialog(true)}>
             <AddBoxSharp />
           </IconButton>
         </Tooltip>
+        <RHFAutocompleteField control={control} name='idCategoria' queries={categoriaQueries} placeholder='Categoria' />
       </Grid>
 
       <VinculoComFornecedorasArrayField control={control} />

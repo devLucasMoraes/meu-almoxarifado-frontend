@@ -1,5 +1,5 @@
 'use client'
-import { locaisDeAplicacaoFields } from '@/app/ui/locais/locaisDeAplicacaoFields'
+import { localDeAplicacaoFields } from '@/app/ui/locais/localDeAplicacaoFields'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
@@ -39,7 +39,7 @@ export default function Page({ params }: { params: { id: string } }) {
         />
       }
     >
-      <EntityInfo<TLocalDeAplicacao> data={local} fields={locaisDeAplicacaoFields} />
+      <EntityInfo<TLocalDeAplicacao> data={local} fields={localDeAplicacaoFields} />
     </BasePageLayout>
   )
 }
