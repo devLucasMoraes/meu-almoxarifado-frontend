@@ -3,13 +3,15 @@ import { NfeDeCompraForm } from '@/app/ui/nfe/compra/NfeDeCompraForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
 import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
+import { useHandleXmlFile } from '@/hooks/useHandleXmlFile'
+import { TNfeDeCompra } from '@/types/models'
 
 export default function Page() {
   console.log('renderizou NfeDeCompraCreate')
 
   const { NFE_DE_COMPRA } = Environment
 
-  //const { handleFileChange, nfeXMLFile, reset } = useFileHandleContext()
+  const { handleFileChange, nfeXMLFile } = useHandleXmlFile()
 
   return (
     <BasePageLayout
@@ -20,12 +22,11 @@ export default function Page() {
           //mostrarBotaoResetXML={!!nfeXMLFile?.nfe}
           //aoClicarEmResetXML={reset}
           mostrarBotaoImportarXML
-          //aoAlternarArquivo={handleFileChange}
+          aoAlternarArquivo={handleFileChange}
         />
       }
     >
-      <NfeDeCompraForm //data={nfeXMLFile as TNfeDeCompra}
-      />
+      <NfeDeCompraForm data={nfeXMLFile as TNfeDeCompra} />
     </BasePageLayout>
   )
 }

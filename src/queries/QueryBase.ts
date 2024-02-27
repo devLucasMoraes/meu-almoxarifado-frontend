@@ -5,8 +5,8 @@ import { queryOptions, useMutation, useQueryClient } from '@tanstack/react-query
 
 export class QueryBase<T> {
   constructor(
-    private resourceKey: string,
-    private service: BaseService<T, TSpringPageData<T>, TSpringPageData<TAutocompleteOption>>
+    protected resourceKey: string,
+    protected service: BaseService<T, TSpringPageData<T>, TSpringPageData<TAutocompleteOption>>
   ) {}
 
   getById(id: number) {
