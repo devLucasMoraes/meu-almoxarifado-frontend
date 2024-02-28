@@ -2,39 +2,27 @@ import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { INfeProc } from '@/types/INfeProc'
-import { TFornecedora, TTransportadora } from '@/types/models'
 import { useQuery } from '@tanstack/react-query'
 import { XMLParser } from 'fast-xml-parser'
 import { useEffect, useState } from 'react'
 
 export function useHandleXmlFile() {
   const [nfeProcJson, setNfeProcJson] = useState<INfeProc>()
-  const [fornecedoraXMLFile, setFornecedoraXMLFile] = useState<TFornecedora>()
-  const [transportadoraXMLFile, setTransportadoraXMLFile] = useState<TTransportadora>()
-  const [nfeXMLFile, setNfeXMLFile] = useState({})
-  console.log('-----------nfeProcJson-------------', nfeProcJson)
+  const [nfeXMLFile, setNfeXMLFile] = useState<{} | undefined>()
 
   const { toggleFornecedoraDialog, toggleTransportadoraDialog } = useIsOpenDialog()
 
-  const { data: fornecedora, isError: fornecedoraNotFound } = useQuery({
-    ...fornecedoraQueries.getByCnpj(`cnpj=${fornecedoraXMLFile?.cnpj ?? ''} `),
+  const { data: fornecedora, isSuccess: fornecedoraIsSuccess } = useQuery({
+    ...fornecedoraQueries.getByCnpj(`cnpj=${nfeProcJson?.nfeProc.NFe.infNFe.emit.CNPJ ?? ''} `),
     retry: false
   })
 
-  const { data: transportadora, isError: transportadoraNotFound } = useQuery({
-    ...transportadoraQueries.getByCnpj(`cnpj=${transportadoraXMLFile?.cnpj ?? ''} `),
+  const { data: transportadora, isSuccess: transportadoraIsSuccess } = useQuery({
+    ...transportadoraQueries.getByCnpj(`cnpj=${nfeProcJson?.nfeProc.NFe.infNFe.transp.transporta.CNPJ ?? ''} `),
     retry: false
   })
 
-  if (fornecedoraNotFound) {
-    toggleFornecedoraDialog(true)
-  }
-
-  if (transportadoraNotFound) {
-    toggleTransportadoraDialog(true)
-  }
-
-  useEffect(() => {
+  /*   useEffect(() => {
     if (!nfeProcJson) return
 
     const transportadoraNfe = nfeProcJson.nfeProc.NFe.infNFe.transp.transporta
@@ -46,9 +34,9 @@ export function useHandleXmlFile() {
       razaoSocial: transportadoraNfe.xNome ?? '',
       fone: ''
     }
-    setTransportadoraXMLFile(transportadoraXMLFile)
-  }, [nfeProcJson, transportadora?.content])
-
+    //setTransportadoraXMLFile(transportadoraXMLFile)
+  }, [nfeProcJson, transportadora?.content]) */
+  /* 
   useEffect(() => {
     if (!nfeProcJson) return
 
@@ -61,8 +49,8 @@ export function useHandleXmlFile() {
       razaoSocial: fornecedoraNfe.xNome,
       fone: fornecedoraNfe.enderEmit.fone ? fornecedoraNfe.enderEmit.fone.toString() : ''
     }
-    setFornecedoraXMLFile(fornecedoraXMLFile)
-  }, [fornecedora?.content, nfeProcJson])
+    //setFornecedoraXMLFile(fornecedoraXMLFile)
+  }, [fornecedora?.content, nfeProcJson]) */
 
   useEffect(() => {
     if (!nfeProcJson) return
@@ -100,19 +88,25 @@ export function useHandleXmlFile() {
     }
 
     setNfeXMLFile(nfeXMLFile)
-  }, [fornecedora?.content, nfeProcJson, transportadora?.content])
+  }, [nfeProcJson])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileInput = e.target
-    const file = fileInput.files?.[0]
-    fileInput.value = ''
+    const { files } = e.target
+    const file = files?.length ? files[0] : null
     if (!file) return
+
+    const alwaysArray = ['nfeProc.NFe.infNFe.det']
 
     const parser = new XMLParser({
       numberParseOptions: {
         eNotation: false,
         leadingZeros: false,
         hex: false
+      },
+      isArray: (_tagName, jpath, _isLeafNode, _isAttribute) => {
+        if (alwaysArray.indexOf(jpath) !== -1) {
+          return true
+        } else return false
       }
     })
 
