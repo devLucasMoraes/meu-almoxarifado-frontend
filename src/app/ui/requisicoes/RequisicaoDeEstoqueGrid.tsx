@@ -2,9 +2,9 @@ import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
 import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { TRequisicaoDeEstoque } from '@/types/models'
-import { AddBoxSharp } from '@mui/icons-material'
-import { Grid, IconButton, Tooltip } from '@mui/material'
+import { Grid } from '@mui/material'
 import { Control } from 'react-hook-form'
+import { AddButton } from '../shared/components/CrudTools/AddButton'
 import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFDatePicker } from '../shared/components/RHFwithMUI/RHFDatePicker'
 import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
@@ -36,11 +36,8 @@ export const RequisicaoDeEstoqueGrid = ({ control }: { control: Control<TRequisi
       </Grid>
 
       <Grid item xs={12} lg={3} textAlign='end'>
-        <Tooltip title='Novo Requisitante'>
-          <IconButton color='primary' size='small' onClick={() => toggleRequisitanteDialog(true)}>
-            <AddBoxSharp />
-          </IconButton>
-        </Tooltip>
+        <AddButton title='Novo Requisitante' handleAdd={() => toggleRequisitanteDialog(true)} />
+
         <RHFAutocompleteField
           placeholder='Requisitante'
           name='idRequisitante'
@@ -50,11 +47,8 @@ export const RequisicaoDeEstoqueGrid = ({ control }: { control: Control<TRequisi
       </Grid>
 
       <Grid item xs={12} lg={3} textAlign='end'>
-        <Tooltip title='Novo Local de aplicação'>
-          <IconButton color='primary' size='small' onClick={() => toggleLocalDeAplicacaoDialog(true)}>
-            <AddBoxSharp />
-          </IconButton>
-        </Tooltip>
+        <AddButton title='Novo Local de aplicação' handleAdd={() => toggleLocalDeAplicacaoDialog(true)} />
+
         <RHFAutocompleteField
           control={control}
           placeholder='Local de aplicação'

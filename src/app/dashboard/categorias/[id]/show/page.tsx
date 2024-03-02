@@ -1,8 +1,8 @@
 'use client'
 import { categoriaFields } from '@/app/ui/categorias/categoriaFields'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { TCategoria } from '@/types/models'
@@ -31,12 +31,10 @@ export default function Page({ params }: { params: { id: string } }) {
       pageTitle={categoria?.nome}
       breadcrumbsPath={[{ label: 'Categorias', to: `${CATEGORIAS.LIST_PAGE}` }, { label: 'Exibir' }]}
       tools={
-        <CrudTools
-          mostrarBotaoEditar
-          linkBotaoEditar={`${CATEGORIAS.EDIT_PAGE.replace('id', id)}`}
-          mostrarBotaoApagar
-          aoClicarEmApagar={() => handleDelete(Number(id))}
-        />
+        <CrudTools.Root>
+          <CrudTools.EditButton editRoute={`${CATEGORIAS.EDIT_PAGE.replace('id', id)}`} />
+          <CrudTools.DeleteButton handleDelete={() => handleDelete(Number(id))} />
+        </CrudTools.Root>
       }
     >
       <EntityInfo<TCategoria> data={categoria} fields={categoriaFields} />

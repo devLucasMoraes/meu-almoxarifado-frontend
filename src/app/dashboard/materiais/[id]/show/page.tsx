@@ -1,8 +1,8 @@
 'use client'
 import { materialFields } from '@/app/ui/materiais/materialFields'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { materialQueries } from '@/queries/MaterialQueries'
 import { TMaterial } from '@/types/models'
@@ -31,12 +31,10 @@ export default function Page({ params }: { params: { id: string } }) {
       pageTitle={material?.descricao ?? ''}
       breadcrumbsPath={[{ label: 'Materiais', to: `${MATERIAIS.LIST_PAGE}` }, { label: 'Exibir' }]}
       tools={
-        <CrudTools
-          mostrarBotaoEditar
-          linkBotaoEditar={`${MATERIAIS.EDIT_PAGE.replace('id', id)}`}
-          mostrarBotaoApagar
-          aoClicarEmApagar={() => handleDelete(Number(id))}
-        />
+        <CrudTools.Root>
+          <CrudTools.EditButton editRoute={`${MATERIAIS.EDIT_PAGE.replace('id', id)}`} />
+          <CrudTools.DeleteButton handleDelete={() => handleDelete(Number(id))} />
+        </CrudTools.Root>
       }
     >
       <EntityInfo<TMaterial> data={material} fields={materialFields} />

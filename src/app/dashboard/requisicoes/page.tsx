@@ -1,8 +1,8 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { UnderlineLink } from '@/app/ui/shared/components/UnderlineLink'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
 import { requisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
@@ -124,11 +124,9 @@ export default function Page() {
       pageTitle='Requisições de Estoque'
       breadcrumbsPath={[{ label: 'Requisições', to: `${REQUISICOES_DE_ESTOQUE.LIST_PAGE}` }, { label: 'Listar' }]}
       tools={
-        <CrudTools
-          mostrarBotaoNovo
-          tituloBotaoNovo='Nova Requisição'
-          linkBotaoNovo={REQUISICOES_DE_ESTOQUE.CREATE_PAGE}
-        />
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={REQUISICOES_DE_ESTOQUE.CREATE_PAGE} title='Nova Requisição' />
+        </CrudTools.Root>
       }
     >
       <MyDataGrid
