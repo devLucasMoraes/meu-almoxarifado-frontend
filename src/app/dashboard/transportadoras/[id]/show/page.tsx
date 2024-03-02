@@ -1,7 +1,7 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { transportadoraFields } from '@/app/ui/transportadoras/transportadoraFields'
 import { Environment } from '@/environment'
 import { transportadoraQueries } from '@/queries/TransportadoraQueries'
@@ -31,12 +31,10 @@ export default function Page({ params }: { params: { id: string } }) {
       pageTitle={transportadora?.nomeFantasia}
       breadcrumbsPath={[{ label: 'Transportadoras', to: `${TRANSPORTADORAS.LIST_PAGE}` }, { label: 'Exibir' }]}
       tools={
-        <CrudTools
-          mostrarBotaoEditar
-          linkBotaoEditar={`${TRANSPORTADORAS.EDIT_PAGE.replace('id', id)}`}
-          mostrarBotaoApagar
-          aoClicarEmApagar={() => handleDelete(Number(id))}
-        />
+        <CrudTools.Root>
+          <CrudTools.EditButton editRoute={`${TRANSPORTADORAS.EDIT_PAGE.replace('id', id)}`} />
+          <CrudTools.DeleteButton handleDelete={() => handleDelete(Number(id))} />
+        </CrudTools.Root>
       }
     >
       <EntityInfo<TTransportadora> data={transportadora} fields={transportadoraFields} />

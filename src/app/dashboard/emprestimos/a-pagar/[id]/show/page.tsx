@@ -1,8 +1,8 @@
 'use client'
 import { emprestimosFields } from '@/app/ui/emprestimos/emprestimoFields'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { emprestimoAPagarQueries } from '@/queries/EmprestimoAPagarQueries'
 import { TEmprestimo } from '@/types/models'
@@ -31,12 +31,10 @@ export default function Page({ params }: { params: { id: string } }) {
       pageTitle={emprestimo?.situacao}
       breadcrumbsPath={[{ label: 'Emprestimos', to: `${EMPRESTIMO.A_PAGAR.LIST_PAGE}` }, { label: 'Exibir' }]}
       tools={
-        <CrudTools
-          mostrarBotaoEditar
-          linkBotaoEditar={`${EMPRESTIMO.A_PAGAR.EDIT_PAGE.replace('id', String(id))}`}
-          mostrarBotaoApagar
-          aoClicarEmApagar={() => handleDelete(Number(id))}
-        />
+        <CrudTools.Root>
+          <CrudTools.EditButton editRoute={`${EMPRESTIMO.A_PAGAR.EDIT_PAGE.replace('id', String(id))}`} />
+          <CrudTools.DeleteButton handleDelete={() => handleDelete(Number(id))} />
+        </CrudTools.Root>
       }
     >
       <EntityInfo<TEmprestimo> data={emprestimo} fields={emprestimosFields} />

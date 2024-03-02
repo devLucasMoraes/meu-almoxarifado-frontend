@@ -1,7 +1,7 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { TCategoria } from '@/types/models'
@@ -87,7 +87,9 @@ export default function Page() {
       pageTitle='Categorias'
       breadcrumbsPath={[{ label: 'Categorias', to: `${CATEGORIAS.LIST_PAGE}` }, { label: 'Listar' }]}
       tools={
-        <CrudTools mostrarBotaoNovo tituloBotaoNovo='Nova Categoria' linkBotaoNovo={`${CATEGORIAS.CREATE_PAGE}`} />
+        <CrudTools.Root>
+          <CrudTools.CreateButton title='Nova Categoria' createRoute={`${CATEGORIAS.CREATE_PAGE}`} />
+        </CrudTools.Root>
       }
     >
       <MyDataGrid

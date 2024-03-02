@@ -1,7 +1,7 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { TFornecedora } from '@/types/models'
@@ -86,7 +86,11 @@ export default function Page() {
     <BasePageLayout
       pageTitle='Listar'
       breadcrumbsPath={[{ label: 'Fornecedoras', to: `${FORNECEDORAS.LIST_PAGE}` }, { label: 'Listar' }]}
-      tools={<CrudTools mostrarBotaoNovo tituloBotaoNovo='Nova Fornecedora' linkBotaoNovo={FORNECEDORAS.CREATE_PAGE} />}
+      tools={
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={FORNECEDORAS.CREATE_PAGE} title='Nova Fornecedora' />
+        </CrudTools.Root>
+      }
     >
       <MyDataGrid
         isLoading={isLoading}

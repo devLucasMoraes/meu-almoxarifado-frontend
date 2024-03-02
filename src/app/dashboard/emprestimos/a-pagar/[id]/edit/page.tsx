@@ -1,7 +1,7 @@
 'use client'
 import { EmprestimoForm } from '@/app/ui/emprestimos/EmprestimoForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { Environment } from '@/environment'
 import { emprestimoAPagarQueries } from '@/queries/EmprestimoAPagarQueries'
 import { useQuery } from '@tanstack/react-query'
@@ -29,12 +29,10 @@ export default function Page({ params }: { params: { id: string } }) {
       pageTitle='Editar Emprestimo'
       breadcrumbsPath={[{ label: 'Emprestimos a pagar', to: `${EMPRESTIMO.A_PAGAR.LIST_PAGE}` }, { label: 'Editar' }]}
       tools={
-        <CrudTools
-          mostrarBotaoExibir
-          linkBotaoExibir={`${EMPRESTIMO.A_PAGAR.SHOW_PAGE.replace('id', String(id))}`}
-          mostrarBotaoApagar
-          aoClicarEmApagar={() => handleDelete(Number(id))}
-        />
+        <CrudTools.Root>
+          <CrudTools.ShowButton showRoute={`${EMPRESTIMO.A_PAGAR.SHOW_PAGE.replace('id', String(id))}`} />
+          <CrudTools.DeleteButton handleDelete={() => handleDelete(Number(id))} />
+        </CrudTools.Root>
       }
     >
       <EmprestimoForm id={id} data={emprestimo} />

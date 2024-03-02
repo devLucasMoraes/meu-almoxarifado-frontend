@@ -2,9 +2,9 @@ import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { TNfeDeCompra } from '@/types/models'
-import { AddBoxSharp } from '@mui/icons-material'
-import { Grid, IconButton, Tooltip } from '@mui/material'
+import { Grid } from '@mui/material'
 import { Control } from 'react-hook-form'
+import { AddButton } from '../../shared/components/CrudTools/AddButton'
 import { RHFAutocompleteField } from '../../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFDatePicker } from '../../shared/components/RHFwithMUI/RHFDatePicker'
 import { RHFTextField } from '../../shared/components/RHFwithMUI/RHFTextField'
@@ -70,11 +70,8 @@ export const NfeDeCompraGrid = ({ control, data }: { control: Control<TNfeDeComp
       </Grid>
 
       <Grid item xs={12} lg={3} textAlign='end'>
-        <Tooltip title='Nova Fornecedora'>
-          <IconButton color='primary' size='small' onClick={() => toggleFornecedoraDialog(true)}>
-            <AddBoxSharp />
-          </IconButton>
-        </Tooltip>
+        <AddButton title='Nova Fornecedora' handleAdd={() => toggleFornecedoraDialog(true)} />
+
         <RHFAutocompleteField
           control={control}
           name='idFornecedora'
@@ -88,11 +85,8 @@ export const NfeDeCompraGrid = ({ control, data }: { control: Control<TNfeDeComp
       </Grid>
 
       <Grid item xs={12} lg={3} textAlign='end'>
-        <Tooltip title='Nova Transportadora'>
-          <IconButton color='primary' size='small' onClick={() => toggleTransportadoraDialog(true)}>
-            <AddBoxSharp />
-          </IconButton>
-        </Tooltip>
+        <AddButton title='Nova Transportadora' handleAdd={() => toggleTransportadoraDialog(true)} />
+
         <RHFAutocompleteField
           control={control}
           name='idTransportadora'

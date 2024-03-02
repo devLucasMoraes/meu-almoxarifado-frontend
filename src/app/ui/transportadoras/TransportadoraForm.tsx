@@ -9,8 +9,8 @@ import { Box, Stack } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { CancelButton } from '../shared/components/crudTools/CancelButton'
-import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
+import { CancelButton } from '../shared/components/CrudTools/CancelButton'
+import { SaveSubmitButton } from '../shared/components/CrudTools/SaveSubmitButton'
 import { TransportadoraFormGrid } from './TransportadoraFormGrid'
 
 export const TransportadoraForm = ({ data, id }: { data?: TTransportadora; id?: string }) => {

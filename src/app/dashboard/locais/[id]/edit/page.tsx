@@ -1,7 +1,7 @@
 'use client'
 import { LocalDeAplicacaoForm } from '@/app/ui/locais/LocalDeAplicacaoForm'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { Environment } from '@/environment'
 import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
 import { useQuery } from '@tanstack/react-query'
@@ -28,12 +28,10 @@ export default function LocaisDeAplicacaoEdit({ params }: { params: { id: string
       pageTitle='Editar Local de Aplicação'
       breadcrumbsPath={[{ label: 'Locais', to: `${LOCAIS_DE_APLICACAO.LIST_PAGE}` }, { label: 'Editar' }]}
       tools={
-        <CrudTools
-          mostrarBotaoExibir
-          linkBotaoExibir={`${LOCAIS_DE_APLICACAO.SHOW_PAGE.replace('id', id)}`}
-          mostrarBotaoApagar
-          aoClicarEmApagar={() => handleDelete(Number(id))}
-        />
+        <CrudTools.Root>
+          <CrudTools.ShowButton showRoute={`${LOCAIS_DE_APLICACAO.SHOW_PAGE.replace('id', id)}`} />
+          <CrudTools.DeleteButton handleDelete={() => handleDelete(Number(id))} />
+        </CrudTools.Root>
       }
     >
       <LocalDeAplicacaoForm data={local} id={id} />

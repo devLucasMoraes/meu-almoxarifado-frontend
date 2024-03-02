@@ -1,7 +1,7 @@
 import { Download } from '@mui/icons-material'
 import { Button, Input, Typography } from '@mui/material'
 
-export const ImportButton = ({ handleImport }: { handleImport: () => void }) => {
+export function ImportButton({ handleImport }: { handleImport: () => void }) {
   return (
     <Button color='primary' variant='outlined' component='label' startIcon={<Download />}>
       <Typography variant='button' whiteSpace='nowrap' textOverflow='ellipsis' overflow='hidden'>

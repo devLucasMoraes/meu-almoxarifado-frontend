@@ -1,9 +1,9 @@
 import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { TMaterial } from '@/types/models'
-import { AddBoxSharp } from '@mui/icons-material'
-import { Grid, IconButton, Tooltip } from '@mui/material'
+import { Grid } from '@mui/material'
 import { Control } from 'react-hook-form'
+import { AddButton } from '../shared/components/CrudTools/AddButton'
 import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFCheckbox } from '../shared/components/RHFwithMUI/RHFCheckbox'
 import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
@@ -26,11 +26,8 @@ export const MaterialFormGrid = ({ control }: { control: Control<TMaterial> }) =
       </Grid>
 
       <Grid item xs={10} lg={isOpen.materialDialog ? 12 : 6} textAlign='end'>
-        <Tooltip title='Nova Categoria'>
-          <IconButton color='primary' size='small' onClick={() => toggleCategoriaDialog(true)}>
-            <AddBoxSharp />
-          </IconButton>
-        </Tooltip>
+        <AddButton title='Nova Categoria' handleAdd={() => toggleCategoriaDialog(true)} />
+
         <RHFAutocompleteField control={control} name='idCategoria' queries={categoriaQueries} placeholder='Categoria' />
       </Grid>
 

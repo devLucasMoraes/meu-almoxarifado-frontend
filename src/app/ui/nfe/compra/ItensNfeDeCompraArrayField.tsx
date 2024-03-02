@@ -3,11 +3,12 @@ import { useMyFieldArray } from '@/hooks/useMyFieldArray'
 import { materialQueries } from '@/queries/MaterialQueries'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { TNfeDeCompra } from '@/types/models'
-import { AddBoxSharp, Delete, Edit, Inventory, Preview } from '@mui/icons-material'
-import { Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip } from '@mui/material'
+import { Delete, Edit, Inventory, Preview } from '@mui/icons-material'
+import { Chip, Divider, Grid, IconButton, Paper, Stack } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import { useState } from 'react'
 import { Control, FieldArrayWithId } from 'react-hook-form'
+import { AddButton } from '../../shared/components/CrudTools/AddButton'
 import { MyDataGrid } from '../../shared/components/MyDataGrid'
 import { RHFAutocompleteField } from '../../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFTextField } from '../../shared/components/RHFwithMUI/RHFTextField'
@@ -234,11 +235,8 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
               </Grid>
 
               <Grid item xs={12} lg={3} textAlign='end'>
-                <Tooltip title='Novo material'>
-                  <IconButton color='primary' size='small' onClick={() => toggleMaterialDialog(true)}>
-                    <AddBoxSharp />
-                  </IconButton>
-                </Tooltip>
+                <AddButton title='Novo material' handleAdd={() => toggleMaterialDialog(true)} />
+
                 <RHFAutocompleteField
                   control={control}
                   name={`itens.${originalIndex}.idMaterial`}

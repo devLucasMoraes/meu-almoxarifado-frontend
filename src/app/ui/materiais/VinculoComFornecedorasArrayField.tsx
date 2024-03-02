@@ -3,11 +3,12 @@ import { useMyFieldArray } from '@/hooks/useMyFieldArray'
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { TMaterial, TVinculoMaterialFornecedora } from '@/types/models'
-import { AddBoxSharp, Delete, Edit, Factory, Preview } from '@mui/icons-material'
-import { Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip } from '@mui/material'
+import { Delete, Edit, Factory, Preview } from '@mui/icons-material'
+import { Chip, Divider, Grid, IconButton, Paper, Stack } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import { useState } from 'react'
 import { Control, FieldArrayWithId } from 'react-hook-form'
+import { AddButton } from '../shared/components/CrudTools/AddButton'
 import { MyDataGrid } from '../shared/components/MyDataGrid'
 import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
@@ -89,11 +90,7 @@ export function VinculoComFornecedorasArrayField({ control }: { control: Control
               alignItems='flex-end'
             >
               <Grid item xs={10} textAlign='end'>
-                <Tooltip title='Nova Fornecedora'>
-                  <IconButton color='primary' size='small' onClick={() => toggleFornecedoraDialog(true)}>
-                    <AddBoxSharp />
-                  </IconButton>
-                </Tooltip>
+                <AddButton title='Nova Fornecedora' handleAdd={() => toggleFornecedoraDialog(true)} />
                 <RHFAutocompleteField
                   queries={fornecedoraQueries}
                   control={control}

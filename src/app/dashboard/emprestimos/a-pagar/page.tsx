@@ -1,8 +1,8 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { UnderlineLink } from '@/app/ui/shared/components/UnderlineLink'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { emprestimoAPagarQueries } from '@/queries/EmprestimoAPagarQueries'
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
@@ -13,8 +13,6 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-
-//const emprestimoAPagarQueries = new EmprestimoAPagarQueries()
 
 export default function Page() {
   console.log('renderizou EmprestimoList')
@@ -104,7 +102,9 @@ export default function Page() {
       pageTitle='Listar'
       breadcrumbsPath={[{ label: 'Emprestimos a pagar', to: `${EMPRESTIMO.A_PAGAR.LIST_PAGE}` }, { label: 'Listar' }]}
       tools={
-        <CrudTools mostrarBotaoNovo tituloBotaoNovo='Novo Emprestimo' linkBotaoNovo={EMPRESTIMO.A_PAGAR.CREATE_PAGE} />
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={EMPRESTIMO.A_PAGAR.CREATE_PAGE} title='Novo Emprestimo' />
+        </CrudTools.Root>
       }
     >
       <MyDataGrid
