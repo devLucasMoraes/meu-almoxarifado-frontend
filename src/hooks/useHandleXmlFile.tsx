@@ -1,67 +1,88 @@
-import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
-import { transportadoraQueries } from '@/queries/TransportadoraQueries'
+import { fornecedoraService } from '@/services/FornecedoraService'
+import { transportadoraService } from '@/services/TransportadoraService'
+import { useDialogDataStore } from '@/store/dialogDataStore'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { INfeProc } from '@/types/INfeProc'
-import { useQuery } from '@tanstack/react-query'
+import { TFornecedora, TTransportadora } from '@/types/models'
 import { XMLParser } from 'fast-xml-parser'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+
+const parseXml = (fileContent: string): INfeProc => {
+  const alwaysArray = ['nfeProc.NFe.infNFe.det']
+
+  const parser = new XMLParser({
+    numberParseOptions: {
+      eNotation: false,
+      leadingZeros: false,
+      hex: false
+    },
+    isArray: (_tagName, jpath, _isLeafNode, _isAttribute) => {
+      if (alwaysArray.indexOf(jpath) !== -1) {
+        return true
+      } else return false
+    }
+  })
+
+  return parser.parse(fileContent)
+}
 
 export function useHandleXmlFile() {
   const [nfeProcJson, setNfeProcJson] = useState<INfeProc>()
-  const [nfeXMLFile, setNfeXMLFile] = useState<{} | undefined>()
+  const [nfeData, setNfeData] = useState<{}>()
+  const [fornecedora, setFornecedora] = useState<TFornecedora>()
+  const [transportadora, setTransportadora] = useState<TTransportadora>()
 
   const { toggleFornecedoraDialog, toggleTransportadoraDialog } = useIsOpenDialog()
+  const { setFornecedoraDialogData, setTransportadoraDialogData, fornecedoraDialogData, transportadoraDialogData } =
+    useDialogDataStore()
 
-  const { data: fornecedora, isSuccess: fornecedoraIsSuccess } = useQuery({
-    ...fornecedoraQueries.getByCnpj(`cnpj=${nfeProcJson?.nfeProc.NFe.infNFe.emit.CNPJ ?? ''} `),
-    retry: false
-  })
+  const getFornecedora = useCallback(
+    async (fornecedoraNfe: any) => {
+      try {
+        const fornecedora = await fornecedoraService.getByCnpj(fornecedoraNfe.CNPJ.toString())
+        setFornecedora(fornecedora)
+      } catch (error) {
+        const fornecedoraXMLFile = {
+          cnpj: fornecedoraNfe.CNPJ.toString(),
+          nomeFantasia: fornecedoraNfe.xFant ?? '',
+          razaoSocial: fornecedoraNfe.xNome,
+          fone: fornecedoraNfe.enderEmit.fone?.toString() ?? ''
+        }
+        setFornecedoraDialogData(fornecedoraXMLFile as TFornecedora)
+        toggleFornecedoraDialog(true)
+      }
+    },
+    [setFornecedoraDialogData, toggleFornecedoraDialog]
+  )
 
-  const { data: transportadora, isSuccess: transportadoraIsSuccess } = useQuery({
-    ...transportadoraQueries.getByCnpj(`cnpj=${nfeProcJson?.nfeProc.NFe.infNFe.transp.transporta.CNPJ ?? ''} `),
-    retry: false
-  })
+  const getTransportadora = useCallback(
+    async (transportadoraNfe: any) => {
+      try {
+        const transportadora = await transportadoraService.getByCnpj(transportadoraNfe.CNPJ.toString())
+        setTransportadora(transportadora)
+      } catch (error) {
+        const transportadoraXMLFile = {
+          cnpj: transportadoraNfe.CNPJ.toString(),
+          nomeFantasia: '',
+          razaoSocial: transportadoraNfe.xNome ?? '',
+          fone: ''
+        }
+        setTransportadoraDialogData(transportadoraXMLFile as TFornecedora)
+        toggleTransportadoraDialog(true)
+      }
+    },
+    [setTransportadoraDialogData, toggleTransportadoraDialog]
+  )
 
-  /*   useEffect(() => {
-    if (!nfeProcJson) return
-
-    const transportadoraNfe = nfeProcJson.nfeProc.NFe.infNFe.transp.transporta
-
-    const transportadoraXMLFile: TTransportadora = {
-      id: transportadora?.content.map(t => t.id) as unknown as number,
-      cnpj: transportadoraNfe.CNPJ.toString(),
-      nomeFantasia: '',
-      razaoSocial: transportadoraNfe.xNome ?? '',
-      fone: ''
-    }
-    //setTransportadoraXMLFile(transportadoraXMLFile)
-  }, [nfeProcJson, transportadora?.content]) */
-  /* 
-  useEffect(() => {
-    if (!nfeProcJson) return
-
-    const fornecedoraNfe = nfeProcJson.nfeProc.NFe.infNFe.emit
-
-    const fornecedoraXMLFile: TFornecedora = {
-      id: fornecedora?.content.map(t => t.id) as unknown as number,
-      cnpj: fornecedoraNfe.CNPJ.toString(),
-      nomeFantasia: fornecedoraNfe.xFant,
-      razaoSocial: fornecedoraNfe.xNome,
-      fone: fornecedoraNfe.enderEmit.fone ? fornecedoraNfe.enderEmit.fone.toString() : ''
-    }
-    //setFornecedoraXMLFile(fornecedoraXMLFile)
-  }, [fornecedora?.content, nfeProcJson]) */
-
-  useEffect(() => {
-    if (!nfeProcJson) return
-
-    const chaveNfe = nfeProcJson.nfeProc.protNFe.infProt.chNFe
-    const dataEmissaoNfe = nfeProcJson.nfeProc.NFe.infNFe.ide.dhEmi
-    const totaisNfe = nfeProcJson.nfeProc.NFe.infNFe.total
+  const itensNfeXMLFile = useMemo(() => {
+    if (!nfeProcJson) return []
 
     const itensNfe = nfeProcJson.nfeProc.NFe.infNFe.det
+    const materiaisVinculados = fornecedora?.materiaisVinculados ?? []
 
-    const itensNfeXMLFile = itensNfe.map(item => ({
+    return itensNfe.map(item => ({
+      idMaterial: materiaisVinculados.find(vinculo => item.prod.cProd.toString() === vinculo.referenciaFornecedora)
+        ?.idMaterial,
       descricaoFornecedora: item.prod.xProd,
       referenciaFornecedora: item.prod.cProd.toString(),
       undCom: item.prod.uCom.toUpperCase(),
@@ -69,8 +90,38 @@ export function useHandleXmlFile() {
       valorUntCom: item.prod.vUnCom,
       valorIpi: item.imposto.IPI.IPITrib?.vIPI ?? 0
     }))
+  }, [fornecedora?.materiaisVinculados, nfeProcJson])
 
-    const nfeXMLFile = {
+  useEffect(() => {
+    if (!nfeProcJson) return
+    setFornecedoraDialogData(undefined)
+    setTransportadoraDialogData(undefined)
+
+    const fornecedoraNfe = nfeProcJson.nfeProc.NFe.infNFe.emit
+    const transportadoraNfe = nfeProcJson.nfeProc.NFe.infNFe.transp.transporta
+
+    getFornecedora(fornecedoraNfe)
+    getTransportadora(transportadoraNfe)
+  }, [getFornecedora, getTransportadora, nfeProcJson, setFornecedoraDialogData, setTransportadoraDialogData])
+
+  useEffect(() => {
+    if (!fornecedora && fornecedoraDialogData?.id) {
+      setFornecedora(fornecedoraDialogData)
+    }
+    if (!transportadora && transportadoraDialogData?.id) {
+      setTransportadora(transportadoraDialogData)
+    }
+    console.log('passou antes f', fornecedora)
+    console.log('passou antes t', transportadora)
+    if (!nfeProcJson || !fornecedora || !transportadora) return
+    console.log('passou depois f', fornecedora)
+    console.log('passou depois t', transportadora)
+
+    const chaveNfe = nfeProcJson.nfeProc.protNFe.infProt.chNFe
+    const dataEmissaoNfe = nfeProcJson.nfeProc.NFe.infNFe.ide.dhEmi
+    const totaisNfe = nfeProcJson.nfeProc.NFe.infNFe.total
+
+    const nfeData = {
       nfe: '',
       chaveNfe: chaveNfe.toString(),
       dataEmissao: new Date(dataEmissaoNfe),
@@ -82,41 +133,30 @@ export function useHandleXmlFile() {
       valorTotalProdutos: totaisNfe.ICMSTot.vProd,
       valorTotalNfe: totaisNfe.ICMSTot.vNF,
       obs: '',
-      idTransportadora: transportadora?.content.map(t => t.id) as unknown as number,
-      idFornecedora: fornecedora?.content.map(t => t.id) as unknown as number,
+      idTransportadora: transportadora.id,
+      idFornecedora: fornecedora.id,
       itens: itensNfeXMLFile
     }
 
-    setNfeXMLFile(nfeXMLFile)
-  }, [nfeProcJson])
+    setNfeData(nfeData)
+  }, [fornecedora, fornecedoraDialogData, itensNfeXMLFile, nfeProcJson, transportadora, transportadoraDialogData])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target
     const file = files?.length ? files[0] : null
     if (!file) return
 
-    const alwaysArray = ['nfeProc.NFe.infNFe.det']
-
-    const parser = new XMLParser({
-      numberParseOptions: {
-        eNotation: false,
-        leadingZeros: false,
-        hex: false
-      },
-      isArray: (_tagName, jpath, _isLeafNode, _isAttribute) => {
-        if (alwaysArray.indexOf(jpath) !== -1) {
-          return true
-        } else return false
-      }
-    })
-
     const reader = new FileReader()
     reader.onload = () => {
       const fileContent = reader.result?.toString() ?? ''
-      const nfeProcJson: INfeProc = parser.parse(fileContent)
+      const nfeProcJson: INfeProc = parseXml(fileContent)
+      setFornecedora(undefined)
+      setTransportadora(undefined)
+      setNfeData(undefined)
       setNfeProcJson(nfeProcJson)
     }
     reader.readAsText(file)
   }
-  return { handleFileChange, nfeXMLFile }
+
+  return { handleFileChange, nfeData }
 }

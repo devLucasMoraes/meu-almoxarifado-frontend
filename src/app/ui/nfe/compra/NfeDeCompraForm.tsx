@@ -2,6 +2,7 @@
 import { Environment } from '@/environment'
 import { nfeDeCompraQueries } from '@/queries/NfeDeCompraQueries'
 import { NfeDeCompraSchema } from '@/schemas'
+import { useDialogDataStore } from '@/store/dialogDataStore'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { TNfeDeCompra } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -24,7 +25,8 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
 
   const { isOpen, toggleFornecedoraDialog, toggleMaterialDialog, toggleTransportadoraDialog } = useIsOpenDialog()
 
-  //const { fornecedoraXMLFile, transportadoraXMLFile } = useFileHandleContext()
+  const { fornecedoraDialogData, transportadoraDialogData, setTransportadoraDialogData, setFornecedoraDialogData } =
+    useDialogDataStore()
 
   const { handleSubmit, setValue, control, getValues, clearErrors, reset } = useForm<TNfeDeCompra>({
     criteriaMode: 'all',
@@ -34,13 +36,17 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
 
   const value = getValues()
   console.log('getvalues ----->', value)
+  console.log('fornecedoraDialogData ----->', fornecedoraDialogData)
+  console.log('transportadoraDialogData ----->', transportadoraDialogData)
 
   useEffect(() => {
     console.log('useeffect data', data)
     clearErrors()
     if (data) return
+    setTransportadoraDialogData(undefined)
+    setFornecedoraDialogData(undefined)
     reset()
-  }, [clearErrors, data, reset])
+  }, [clearErrors, data, reset, setFornecedoraDialogData, setTransportadoraDialogData])
 
   useEffect(() => {
     if (!data) return
@@ -62,6 +68,20 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
     setValue('idFornecedora', data.idFornecedora)
     setValue('itens', data.itens)
   }, [data, setValue])
+
+  useEffect(() => {
+    console.log('useefect transportadoraDialogData', transportadoraDialogData)
+    if (!data) return
+    if (!transportadoraDialogData?.id) return
+    setValue('idTransportadora', transportadoraDialogData.id)
+  }, [data, setValue, transportadoraDialogData])
+
+  useEffect(() => {
+    console.log('useefect fornecedoraDialogData', fornecedoraDialogData)
+    if (!data) return
+    if (!fornecedoraDialogData?.id) return
+    setValue('idFornecedora', fornecedoraDialogData.id)
+  }, [data, setValue, fornecedoraDialogData])
 
   const router = useRouter()
 
@@ -96,7 +116,7 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
         title='Nova Fornecedora'
         onClose={() => toggleFornecedoraDialog(false)}
       >
-        <FornecedoraForm />
+        <FornecedoraForm data={fornecedoraDialogData} />
       </CreateDialog>
 
       <CreateDialog
@@ -104,7 +124,7 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
         title='Nova Transportadora'
         onClose={() => toggleTransportadoraDialog(false)}
       >
-        <TransportadoraForm />
+        <TransportadoraForm data={transportadoraDialogData} />
       </CreateDialog>
 
       <CreateDialog

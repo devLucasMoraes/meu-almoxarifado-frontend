@@ -2,7 +2,7 @@ import { ApiInstance } from '@/api'
 import { Environment } from '@/environment'
 
 export class BaseService<T, TSpringPageData, TSpringPageDataAutocomplete> {
-  constructor(private endpoint: string) {}
+  constructor(protected endpoint: string) {}
 
   async getAll(page = 0, size = Environment.LIMITE_DE_LINHAS): Promise<TSpringPageData> {
     const path = `?page=${page}&size=${size}`
