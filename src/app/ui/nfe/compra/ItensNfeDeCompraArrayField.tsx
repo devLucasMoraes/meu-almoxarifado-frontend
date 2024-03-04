@@ -9,7 +9,7 @@ import { GridColDef } from '@mui/x-data-grid'
 import { useState } from 'react'
 import { Control, FieldArrayWithId } from 'react-hook-form'
 import { AddButton } from '../../shared/components/CrudTools/AddButton'
-import { MyDataGrid } from '../../shared/components/MyDataGrid'
+import { ExperimentalDataGrid } from '../../shared/components/ExperimentalDataGrid'
 import { RHFAutocompleteField } from '../../shared/components/RHFwithMUI/RHFAutocompleteField'
 import { RHFTextField } from '../../shared/components/RHFwithMUI/RHFTextField'
 import { UnderlineLink } from '../../shared/components/UnderlineLink'
@@ -144,8 +144,8 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
 
   const columns: GridColDef<FieldArrayWithId<TNfeDeCompra, 'itens', 'id'>>[] = [
     { field: 'idItem', headerName: 'ID', width: 70 },
-    { field: 'referenciaFornecedora', headerName: 'Referencia', minWidth: 220, flex: 0.2 },
-    { field: 'descricaoFornecedora', headerName: 'Descricao', minWidth: 220, flex: 0.2 },
+    { field: 'referenciaFornecedora', headerName: 'Referencia', minWidth: 220, flex: 0.2, editable: true },
+    { field: 'descricaoFornecedora', headerName: 'Descricao', minWidth: 220, flex: 0.2, editable: true },
     {
       field: 'idMaterial',
       headerName: 'Material',
@@ -160,10 +160,10 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
         />
       )
     },
-    { field: 'undCom', headerName: 'Unidade', minWidth: 155, flex: 0.1 },
-    { field: 'quantCom', headerName: 'Quantidade', minWidth: 110, flex: 0.1 },
-    { field: 'valorUntCom', headerName: 'Valor Unit.', minWidth: 110, flex: 0.1 },
-    { field: 'valorIpi', headerName: 'IPI', minWidth: 110, flex: 0.1 },
+    { field: 'undCom', headerName: 'Unidade', minWidth: 155, flex: 0.1, editable: true },
+    { field: 'quantCom', headerName: 'Quantidade', minWidth: 110, flex: 0.1, editable: true },
+    { field: 'valorUntCom', headerName: 'Valor Unit.', minWidth: 110, flex: 0.1, editable: true },
+    { field: 'valorIpi', headerName: 'IPI', minWidth: 110, flex: 0.1, editable: true },
     {
       field: 'actions',
       headerName: 'Ações',
@@ -309,14 +309,15 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
         })}
 
       <Grid item xs={12} component={Paper} variant='outlined'>
-        <MyDataGrid
+        {/* <MyDataGrid
           isLoading={false}
           columns={columns}
           rows={fields}
           totalRowCount={fields.length}
           paginationModel={paginationModel}
           setPaginationModel={setPaginationModel}
-        />
+        /> */}
+        <ExperimentalDataGrid initialRows={fields} />
       </Grid>
     </Grid>
   )
