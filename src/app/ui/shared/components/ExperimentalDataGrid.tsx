@@ -1,5 +1,6 @@
 import { Environment } from '@/environment'
 import { materialQueries } from '@/queries/MaterialQueries'
+import { TItemNfeDeCompra, TNfeDeCompra } from '@/types/models'
 import { Cancel, Delete, Edit, Save } from '@mui/icons-material'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
@@ -9,48 +10,42 @@ import {
   GridActionsCellItem,
   GridColDef,
   GridEventListener,
+  GridRenderCellParams,
   GridRowEditStopReasons,
   GridRowId,
   GridRowModel,
   GridRowModes,
   GridRowModesModel,
-  GridRowsProp,
   GridToolbarContainer
 } from '@mui/x-data-grid'
-import React from 'react'
+import { useState } from 'react'
+import { ArrayPath, Control, FieldArrayWithId, UseFieldArrayAppend, useFieldArray } from 'react-hook-form'
+import { RHFTextField } from './RHFwithMUI/RHFTextField'
 import { UnderlineLink } from './UnderlineLink'
 
-interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void
-  setRowModesModel: (newModel: (oldModel: GridRowModesModel) => GridRowModesModel) => void
-}
-
-function EditToolbar(props: EditToolbarProps) {
-  const { setRows, setRowModesModel } = props
-
+function EditToolbar({ append }: { append: UseFieldArrayAppend<TNfeDeCompra, 'itens'> }) {
   const handleClick = () => {
-    const id = Math.random()
-    setRows(oldRows => [...oldRows, { id, name: '', age: '', isNew: true }])
-    setRowModesModel(oldModel => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' }
-    }))
+    append({} as TItemNfeDeCompra)
   }
 
   return (
     <GridToolbarContainer>
       <Button color='primary' startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
+        Adicionar novo item
       </Button>
     </GridToolbarContainer>
   )
 }
 
-export function ExperimentalDataGrid({ initialRows }: { initialRows: GridRowsProp }) {
-  const [rows, setRows] = React.useState(initialRows)
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({})
+export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompra> }) {
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({})
 
   const { MATERIAIS } = Environment
+
+  const { fields, append, remove, replace } = useFieldArray({
+    control,
+    name: 'itens'
+  })
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -62,29 +57,30 @@ export function ExperimentalDataGrid({ initialRows }: { initialRows: GridRowsPro
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } })
   }
 
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } })
-  }
-
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter(row => row.id !== id))
-  }
-
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true }
-    })
-
-    const editedRow = rows.find(row => row.id === id)
-    if (editedRow!.isNew) {
-      setRows(rows.filter(row => row.id !== id))
+  const handleSaveClick =
+    (params: GridRenderCellParams<FieldArrayWithId<TNfeDeCompra, ArrayPath<TNfeDeCompra>, 'id'>>) => () => {
+      setRowModesModel({ ...rowModesModel, [params.id]: { mode: GridRowModes.View } })
     }
+
+  const handleDeleteClick = (row: FieldArrayWithId<TNfeDeCompra, 'itens', 'id'>) => () => {
+    remove(fields.indexOf(row))
   }
+
+  const handleCancelClick =
+    (params: GridRenderCellParams<FieldArrayWithId<TNfeDeCompra, ArrayPath<TNfeDeCompra>, 'id'>>) => () => {
+      console.log('handleCancelClick params', params)
+      console.log('handleCancelClick fields', fields)
+      console.log('handleCancelClick rowModesModel', rowModesModel)
+
+      setRowModesModel({
+        ...rowModesModel,
+        [params.id]: { mode: GridRowModes.View, ignoreModifications: true }
+      })
+    }
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false }
-    setRows(rows.map(row => (row.id === newRow.id ? updatedRow : row)))
+    const updatedRow = { ...newRow }
+
     return updatedRow
   }
 
@@ -92,10 +88,40 @@ export function ExperimentalDataGrid({ initialRows }: { initialRows: GridRowsPro
     setRowModesModel(newRowModesModel)
   }
 
-  const columns: GridColDef[] = [
+  const columns: GridColDef<FieldArrayWithId<TNfeDeCompra, 'itens', 'id'>>[] = [
     { field: 'idItem', headerName: 'ID', width: 70 },
-    { field: 'referenciaFornecedora', headerName: 'Referencia', minWidth: 220, flex: 0.2, editable: true },
-    { field: 'descricaoFornecedora', headerName: 'Descricao', minWidth: 220, flex: 0.2, editable: true },
+    {
+      field: 'referenciaFornecedora',
+      headerName: 'Referencia',
+      minWidth: 220,
+      flex: 0.2,
+      //editable: true,
+      renderCell: params => (
+        <RHFTextField
+          control={control}
+          name={`itens.${fields.indexOf(params.row)}.referenciaFornecedora`}
+          fullWidth
+          //onBlur={() => handleBlur(originalIndex)}
+          //readOnly={vinculoStatus}
+        />
+      )
+    },
+    {
+      field: 'descricaoFornecedora',
+      headerName: 'Descricao',
+      minWidth: 220,
+      flex: 0.2,
+      //editable: true,
+      renderCell: params => (
+        <RHFTextField
+          control={control}
+          name={`itens.${fields.indexOf(params.row)}.descricaoFornecedora`}
+          fullWidth
+          //onBlur={() => handleBlur(originalIndex)}
+          //readOnly={vinculoStatus}
+        />
+      )
+    },
     {
       field: 'idMaterial',
       headerName: 'Material',
@@ -110,36 +136,97 @@ export function ExperimentalDataGrid({ initialRows }: { initialRows: GridRowsPro
         />
       )
     },
-    { field: 'undCom', headerName: 'Unidade', minWidth: 155, flex: 0.1, editable: true },
-    { field: 'quantCom', headerName: 'Quantidade', minWidth: 110, flex: 0.1, editable: true },
-    { field: 'valorUntCom', headerName: 'Valor Unit.', minWidth: 110, flex: 0.1, editable: true },
-    { field: 'valorIpi', headerName: 'IPI', minWidth: 110, flex: 0.1, editable: true },
+    {
+      field: 'undCom',
+      headerName: 'Unidade',
+      minWidth: 155,
+      flex: 0.1,
+      //editable: true,
+      renderCell: params => (
+        <RHFTextField
+          control={control}
+          name={`itens.${fields.indexOf(params.row)}.undCom`}
+          fullWidth
+          isSelected='unidade'
+          //onBlur={() => handleBlur(originalIndex)}
+          //readOnly={vinculoStatus}
+        />
+      )
+    },
+    {
+      field: 'quantCom',
+      headerName: 'Quantidade',
+      minWidth: 110,
+      flex: 0.1,
+      //editable: true,
+      renderCell: params => (
+        <RHFTextField
+          control={control}
+          name={`itens.${fields.indexOf(params.row)}.quantCom`}
+          fullWidth
+          //onBlur={() => handleBlur(originalIndex)}
+          //readOnly={vinculoStatus}
+        />
+      )
+    },
+    {
+      field: 'valorUntCom',
+      headerName: 'Valor Unit.',
+      minWidth: 110,
+      flex: 0.1,
+      //editable: true,
+      renderCell: params => (
+        <RHFTextField
+          control={control}
+          name={`itens.${fields.indexOf(params.row)}.valorUntCom`}
+          fullWidth
+          //onBlur={() => handleBlur(originalIndex)}
+          //readOnly={vinculoStatus}
+        />
+      )
+    },
+    {
+      field: 'valorIpi',
+      headerName: 'IPI',
+      minWidth: 110,
+      flex: 0.1,
+      //editable: true,
+      renderCell: params => (
+        <RHFTextField
+          control={control}
+          name={`itens.${fields.indexOf(params.row)}.valorIpi`}
+          fullWidth
+          //onBlur={() => handleBlur(originalIndex)}
+          //readOnly={vinculoStatus}
+        />
+      )
+    },
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
       width: 100,
       cellClassName: 'actions',
-      getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit
+      getActions: params => {
+        const isInEditMode = rowModesModel[params.id]?.mode === GridRowModes.Edit
 
         if (isInEditMode) {
           return [
             <GridActionsCellItem
-              key={id}
+              key={params.id}
               icon={<Save />}
               label='Save'
               sx={{
                 color: 'primary.main'
               }}
-              onClick={handleSaveClick(id)}
+              //onClick={handleSaveClick(params)}
             />,
             <GridActionsCellItem
-              key={id}
+              key={params.id}
               icon={<Cancel />}
               label='Cancel'
               className='textPrimary'
-              onClick={handleCancelClick(id)}
+              //onClick={handleCancelClick(params)}
               color='inherit'
             />
           ]
@@ -147,18 +234,18 @@ export function ExperimentalDataGrid({ initialRows }: { initialRows: GridRowsPro
 
         return [
           <GridActionsCellItem
-            key={id}
+            key={params.id}
             icon={<Edit />}
             label='Edit'
             className='textPrimary'
-            onClick={handleEditClick(id)}
+            //onClick={handleEditClick(params.id)}
             color='inherit'
           />,
           <GridActionsCellItem
-            key={id}
+            key={params.id}
             icon={<Delete />}
             label='Delete'
-            onClick={handleDeleteClick(id)}
+            onClick={handleDeleteClick(params.row)}
             color='inherit'
           />
         ]
@@ -168,9 +255,9 @@ export function ExperimentalDataGrid({ initialRows }: { initialRows: GridRowsPro
 
   return (
     <Box
+      maxHeight='75vh'
+      display='grid'
       sx={{
-        maxHeight: '75vh',
-        width: '100%',
         '& .actions': {
           color: 'text.secondary'
         },
@@ -180,18 +267,19 @@ export function ExperimentalDataGrid({ initialRows }: { initialRows: GridRowsPro
       }}
     >
       <DataGrid
-        rows={rows}
+        autoHeight
+        rows={fields}
         columns={columns}
-        editMode='row'
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
+        //editMode='row'
+        //rowModesModel={rowModesModel}
+        //onRowModesModelChange={handleRowModesModelChange}
+        //onRowEditStop={handleRowEditStop}
+        //processRowUpdate={processRowUpdate}
         slots={{
           toolbar: EditToolbar
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel }
+          toolbar: { append }
         }}
       />
     </Box>

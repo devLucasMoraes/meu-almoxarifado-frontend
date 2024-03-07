@@ -317,7 +317,7 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
           paginationModel={paginationModel}
           setPaginationModel={setPaginationModel}
         /> */}
-        <ExperimentalDataGrid initialRows={fields} />
+        <ExperimentalDataGrid control={control} />
       </Grid>
     </Grid>
   )
