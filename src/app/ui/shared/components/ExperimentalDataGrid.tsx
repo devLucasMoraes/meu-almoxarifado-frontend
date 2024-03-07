@@ -1,5 +1,4 @@
 import { Environment } from '@/environment'
-import { materialQueries } from '@/queries/MaterialQueries'
 import { TItemNfeDeCompra, TNfeDeCompra } from '@/types/models'
 import { Cancel, Delete, Edit, Save } from '@mui/icons-material'
 import AddIcon from '@mui/icons-material/Add'
@@ -21,7 +20,7 @@ import {
 import { useState } from 'react'
 import { ArrayPath, Control, FieldArrayWithId, UseFieldArrayAppend, useFieldArray } from 'react-hook-form'
 import { RHFTextField } from './RHFwithMUI/RHFTextField'
-import { UnderlineLink } from './UnderlineLink'
+import { VinculoMaterialButton } from './crudTools/VinculoMaterialButton'
 
 function EditToolbar({ append }: { append: UseFieldArrayAppend<TNfeDeCompra, 'itens'> }) {
   const handleClick = () => {
@@ -98,6 +97,7 @@ export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompr
       //editable: true,
       renderCell: params => (
         <RHFTextField
+          variant='standard'
           control={control}
           name={`itens.${fields.indexOf(params.row)}.referenciaFornecedora`}
           fullWidth
@@ -114,6 +114,7 @@ export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompr
       //editable: true,
       renderCell: params => (
         <RHFTextField
+          variant='standard'
           control={control}
           name={`itens.${fields.indexOf(params.row)}.descricaoFornecedora`}
           fullWidth
@@ -127,14 +128,7 @@ export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompr
       headerName: 'Material',
       minWidth: 200,
       flex: 0.3,
-      renderCell: params => (
-        <UnderlineLink
-          queries={materialQueries}
-          id={params.row.idMaterial}
-          linkPath={`${MATERIAIS.SHOW_PAGE.replace('id', String(params.row.idMaterial))}`}
-          nameProperty='descricao'
-        />
-      )
+      renderCell: params => <VinculoMaterialButton id={params.row.idMaterial} />
     },
     {
       field: 'undCom',
@@ -144,6 +138,7 @@ export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompr
       //editable: true,
       renderCell: params => (
         <RHFTextField
+          variant='standard'
           control={control}
           name={`itens.${fields.indexOf(params.row)}.undCom`}
           fullWidth
@@ -161,9 +156,11 @@ export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompr
       //editable: true,
       renderCell: params => (
         <RHFTextField
+          variant='standard'
           control={control}
           name={`itens.${fields.indexOf(params.row)}.quantCom`}
           fullWidth
+          type='number'
           //onBlur={() => handleBlur(originalIndex)}
           //readOnly={vinculoStatus}
         />
@@ -177,9 +174,11 @@ export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompr
       //editable: true,
       renderCell: params => (
         <RHFTextField
+          variant='standard'
           control={control}
           name={`itens.${fields.indexOf(params.row)}.valorUntCom`}
           fullWidth
+          type='number'
           //onBlur={() => handleBlur(originalIndex)}
           //readOnly={vinculoStatus}
         />
@@ -193,9 +192,11 @@ export function ExperimentalDataGrid({ control }: { control: Control<TNfeDeCompr
       //editable: true,
       renderCell: params => (
         <RHFTextField
+          variant='standard'
           control={control}
           name={`itens.${fields.indexOf(params.row)}.valorIpi`}
           fullWidth
+          type='number'
           //onBlur={() => handleBlur(originalIndex)}
           //readOnly={vinculoStatus}
         />
