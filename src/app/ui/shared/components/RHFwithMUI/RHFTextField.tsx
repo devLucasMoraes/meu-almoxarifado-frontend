@@ -9,12 +9,13 @@ export const RHFTextField = <TField extends FieldValues>(props: {
   placeholder?: string
   fullWidth?: boolean
   isSelected?: 'tipo' | 'unidade' | 'situacao'
+  variant?: 'standard' | 'filled' | 'outlined'
   endAdornment?: string
   type?: React.HTMLInputTypeAttribute
   onBlur?: () => void
   readOnly?: boolean
 }) => {
-  const { control, name } = props
+  const { control, name, variant = 'outlined' } = props
 
   return (
     <Controller
@@ -32,6 +33,7 @@ export const RHFTextField = <TField extends FieldValues>(props: {
 
         return (
           <TextField
+            variant={variant}
             error={!!error}
             fullWidth={props.fullWidth}
             helperText={error?.message}

@@ -28,11 +28,15 @@ export const NfeDeCompraForm = ({ data, id }: { data?: TNfeDeCompra; id?: string
   const { fornecedoraDialogData, transportadoraDialogData, setTransportadoraDialogData, setFornecedoraDialogData } =
     useDialogDataStore()
 
-  const { handleSubmit, setValue, control, getValues, clearErrors, reset } = useForm<TNfeDeCompra>({
+  const { handleSubmit, setValue, control, getValues, clearErrors, reset, formState } = useForm<TNfeDeCompra>({
     criteriaMode: 'all',
     mode: 'all',
     resolver: zodResolver(NfeDeCompraSchema)
   })
+
+  const { errors } = formState
+
+  console.log('erros', errors)
 
   const value = getValues()
   console.log('getvalues ----->', value)
