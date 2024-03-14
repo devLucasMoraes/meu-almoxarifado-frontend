@@ -1,10 +1,12 @@
-import { AddBox } from '@mui/icons-material'
-import { IconButton } from '@mui/material'
+import { AddBoxSharp } from '@mui/icons-material'
+import { IconButton, Tooltip } from '@mui/material'
 
-export const AddButton = ({ handleAdd }: { handleAdd?: () => void }) => {
+export function AddButton({ handleAdd, title }: { handleAdd?: () => void; title: string }) {
   return (
-    <IconButton color='info' onClick={handleAdd}>
-      <AddBox />
-    </IconButton>
+    <Tooltip title={title}>
+      <IconButton color='primary' size='small' onClick={handleAdd}>
+        <AddBoxSharp />
+      </IconButton>
+    </Tooltip>
   )
 }

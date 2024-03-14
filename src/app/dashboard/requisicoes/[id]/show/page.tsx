@@ -1,8 +1,8 @@
 'use client'
 import { requisicaoDeEstoqueFields } from '@/app/ui/requisicoes/requisicaoDeEstoqueFields'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { EntityInfo } from '@/app/ui/shared/components/EntityInfo'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { requisicaoDeEstoqueQueries } from '@/queries/RequisicaoDeEstoqueQueries'
 import { TRequisicaoDeEstoque } from '@/types/models'
@@ -31,12 +31,10 @@ export default function Page({ params }: { params: { id: string } }) {
       pageTitle={requisicoesDeEstoque?.ordemProducao ?? ''}
       breadcrumbsPath={[{ label: 'Requisições', to: `${REQUISICOES_DE_ESTOQUE.LIST_PAGE}` }, { label: 'Exibir' }]}
       tools={
-        <CrudTools
-          mostrarBotaoEditar
-          linkBotaoEditar={`${REQUISICOES_DE_ESTOQUE.EDIT_PAGE.replace('id', id)}`}
-          mostrarBotaoApagar
-          aoClicarEmApagar={() => handleDelete(Number(id))}
-        />
+        <CrudTools.Root>
+          <CrudTools.EditButton editRoute={`${REQUISICOES_DE_ESTOQUE.EDIT_PAGE.replace('id', id)}`} />
+          <CrudTools.DeleteButton handleDelete={() => handleDelete(Number(id))} />
+        </CrudTools.Root>
       }
     >
       <EntityInfo<TRequisicaoDeEstoque> data={requisicoesDeEstoque} fields={requisicaoDeEstoqueFields} />

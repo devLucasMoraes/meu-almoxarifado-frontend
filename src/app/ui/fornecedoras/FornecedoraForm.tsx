@@ -2,6 +2,7 @@
 import { Environment } from '@/environment'
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { FornecedoraSchema } from '@/schemas'
+import { useDialogDataStore } from '@/store/dialogDataStore'
 import { useIsOpenDialog } from '@/store/dialogStore'
 import { TFornecedora } from '@/types/models'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,8 +10,8 @@ import { Box, Stack } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { CancelButton } from '../shared/components/crudTools/CancelButton'
-import { SaveSubmitButton } from '../shared/components/crudTools/SaveSubmitButton'
+import { CancelButton } from '../shared/components/CrudTools/CancelButton'
+import { SaveSubmitButton } from '../shared/components/CrudTools/SaveSubmitButton'
 import { FornecedoraFormGrid } from './FornecedoraFormGrid'
 
 export const FornecedoraForm = ({ data, id }: { data?: TFornecedora; id?: string }) => {
@@ -19,6 +20,7 @@ export const FornecedoraForm = ({ data, id }: { data?: TFornecedora; id?: string
   const { FORNECEDORAS } = Environment
 
   const { isOpen, toggleFornecedoraDialog } = useIsOpenDialog()
+  const { setFornecedoraDialogData } = useDialogDataStore()
 
   const { handleSubmit, setValue, control } = useForm<TFornecedora>({
     criteriaMode: 'all',
@@ -47,6 +49,7 @@ export const FornecedoraForm = ({ data, id }: { data?: TFornecedora; id?: string
       create(data, {
         onSuccess: response => {
           !isOpen.fornecedoraDialog && router.push(`${FORNECEDORAS.SHOW_PAGE.replace('id', String(response.id))}`)
+          setFornecedoraDialogData(response)
           toggleFornecedoraDialog(false)
         }
       })

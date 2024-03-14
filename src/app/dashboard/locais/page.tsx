@@ -1,7 +1,7 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { localDeAplicacaoQueries } from '@/queries/LocalDeAplicacaoQueries'
 import { TLocalDeAplicacao } from '@/types/models'
@@ -84,7 +84,9 @@ export default function Page() {
       pageTitle='Locais de Aplicação'
       breadcrumbsPath={[{ label: 'Locais', to: `${LOCAIS_DE_APLICACAO.LIST_PAGE}` }, { label: 'Listar' }]}
       tools={
-        <CrudTools mostrarBotaoNovo tituloBotaoNovo='Novo Local' linkBotaoNovo={LOCAIS_DE_APLICACAO.CREATE_PAGE} />
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={LOCAIS_DE_APLICACAO.CREATE_PAGE} title='Novo Local ' />
+        </CrudTools.Root>
       }
     >
       <MyDataGrid

@@ -2,7 +2,7 @@ import { ApiInstance } from '@/api'
 import { Environment } from '@/environment'
 
 export class BaseService<T, TSpringPageData, TSpringPageDataAutocomplete> {
-  constructor(private endpoint: string) {}
+  constructor(protected endpoint: string) {}
 
   async getAll(page = 0, size = Environment.LIMITE_DE_LINHAS): Promise<TSpringPageData> {
     const path = `?page=${page}&size=${size}`
@@ -12,10 +12,8 @@ export class BaseService<T, TSpringPageData, TSpringPageDataAutocomplete> {
     return response.data
   }
 
-  async dynamicGetAll(page = 0, size = Environment.LIMITE_DE_LINHAS): Promise<TSpringPageData> {
-    const path = `&page=${page}&size=${size}`
-
-    const response = await ApiInstance.get<TSpringPageData>(`${this.endpoint}/query${path}`)
+  async dynamicGetAll(path: string, page = 0, size = Environment.LIMITE_DE_LINHAS): Promise<TSpringPageData> {
+    const response = await ApiInstance.get<TSpringPageData>(`${this.endpoint}/query?${path}&page=${page}&size=${size}`)
 
     return response.data
   }

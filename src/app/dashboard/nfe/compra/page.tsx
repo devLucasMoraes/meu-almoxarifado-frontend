@@ -1,8 +1,8 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { UnderlineLink } from '@/app/ui/shared/components/UnderlineLink'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { fornecedoraQueries } from '@/queries/FornecedoraQueries'
 import { nfeDeCompraQueries } from '@/queries/NfeDeCompraQueries'
@@ -132,13 +132,11 @@ export default function Page() {
   return (
     <BasePageLayout
       pageTitle='Notas de compra'
-      breadcrumbsPath={[{ label: 'Notas', to: `${Environment.NFE_DE_COMPRA.LIST_PAGE}` }, { label: 'Listar' }]}
+      breadcrumbsPath={[{ label: 'Notas', to: `${NFE_DE_COMPRA.LIST_PAGE}` }, { label: 'Listar' }]}
       tools={
-        <CrudTools
-          mostrarBotaoNovo
-          tituloBotaoNovo='Nova nota fiscal'
-          linkBotaoNovo={Environment.NFE_DE_COMPRA.CREATE_PAGE}
-        />
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={NFE_DE_COMPRA.CREATE_PAGE} title='Nova nota fiscal' />
+        </CrudTools.Root>
       }
     >
       <MyDataGrid

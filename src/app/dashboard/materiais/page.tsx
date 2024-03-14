@@ -1,8 +1,8 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
 import { UnderlineLink } from '@/app/ui/shared/components/UnderlineLink'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { categoriaQueries } from '@/queries/CategoriaQueries'
 import { materialQueries } from '@/queries/MaterialQueries'
@@ -101,7 +101,11 @@ export default function Page() {
     <BasePageLayout
       pageTitle='Listar'
       breadcrumbsPath={[{ label: 'Materiais', to: `${MATERIAIS.LIST_PAGE}` }, { label: 'Listar' }]}
-      tools={<CrudTools mostrarBotaoNovo tituloBotaoNovo='Criar Novo' linkBotaoNovo={`${MATERIAIS.CREATE_PAGE}`} />}
+      tools={
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={MATERIAIS.CREATE_PAGE} title='Criar Novo' />
+        </CrudTools.Root>
+      }
     >
       <MyDataGrid
         isLoading={isLoading}

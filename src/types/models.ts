@@ -47,6 +47,7 @@ export type TFornecedora = {
   razaoSocial: string
   cnpj: string
   fone: string
+  materiaisVinculados?: TVinculoMaterialFornecedora[]
 }
 
 export type TTransportadora = {

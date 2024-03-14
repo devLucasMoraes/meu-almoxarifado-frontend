@@ -28,7 +28,7 @@ export const VinculoMaterialFornecedoraSchema = z.object({
   idFornecedora: z.number(),
   idMaterial: z.number().optional(),
   referenciaFornecedora: z.string(),
-  descricaoFornecedora: z.string(),
+  descricaoFornecedora: z.string().optional(),
   conversoesDeCompra: z.array(ConversaoDeCompraSchema).optional()
 })
 
@@ -46,7 +46,8 @@ export const FornecedoraSchema = z.object({
   nomeFantasia: z.string().nonempty(),
   razaoSocial: z.string().nonempty(),
   cnpj: z.string().nonempty(),
-  fone: z.string().nonempty()
+  fone: z.string().nonempty(),
+  materiaisVinculados: z.array(VinculoMaterialFornecedoraSchema).optional()
 })
 
 export const TransportadoraSchema = z.object({

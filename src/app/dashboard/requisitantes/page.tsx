@@ -1,7 +1,7 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { requisitanteQueries } from '@/queries/RequisitanteQueries'
 import { TRequisitante } from '@/types/models'
@@ -85,7 +85,9 @@ export default function Page() {
       pageTitle='Listar'
       breadcrumbsPath={[{ label: 'Requisitantes', to: `${REQUISITANTES.LIST_PAGE}` }, { label: 'Listar' }]}
       tools={
-        <CrudTools mostrarBotaoNovo tituloBotaoNovo='Novo Requisitante' linkBotaoNovo={REQUISITANTES.CREATE_PAGE} />
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={REQUISITANTES.CREATE_PAGE} title='Novo Requisitante' />
+        </CrudTools.Root>
       }
     >
       <MyDataGrid

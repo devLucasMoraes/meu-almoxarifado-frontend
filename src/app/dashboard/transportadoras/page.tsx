@@ -1,7 +1,7 @@
 'use client'
 import { BasePageLayout } from '@/app/ui/shared/components/BasePageLayout'
+import { CrudTools } from '@/app/ui/shared/components/CrudTools'
 import { MyDataGrid } from '@/app/ui/shared/components/MyDataGrid'
-import { CrudTools } from '@/app/ui/shared/components/crudTools/CrudTools'
 import { Environment } from '@/environment'
 import { transportadoraQueries } from '@/queries/TransportadoraQueries'
 import { TTransportadora } from '@/types/models'
@@ -87,7 +87,9 @@ export default function Page() {
       pageTitle='Listar'
       breadcrumbsPath={[{ label: 'Transportadoras', to: `${TRANSPORTADORAS.LIST_PAGE}` }, { label: 'Listar' }]}
       tools={
-        <CrudTools mostrarBotaoNovo tituloBotaoNovo='Nova Transportadora' linkBotaoNovo={TRANSPORTADORAS.CREATE_PAGE} />
+        <CrudTools.Root>
+          <CrudTools.CreateButton createRoute={TRANSPORTADORAS.CREATE_PAGE} title='Nova Transportadora' />
+        </CrudTools.Root>
       }
     >
       <MyDataGrid
