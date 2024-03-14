@@ -1,45 +1,66 @@
-# Material UI - Next.js App Router example in TypeScript
+# Meu Almoxarifado Frontend
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-next-app`](https://github.com/vercel/next.js/tree/HEAD/packages/create-next-app) with Material UI installed.
+Este é o front-end de um sistema de controle de estoque em desenvolvimento.
 
-## How to use
+## Descrição
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+O sistema de controle de estoque permite que os usuários gerenciem eficientemente o estoque de produtos em um ambiente de varejo. Este front-end é construído usando Next.js, React e Material-UI.
 
-<!-- #default-branch-switch -->
+## Instalação
 
-```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/material-ui-nextjs-ts
-cd material-ui-nextjs-ts
-```
+Certifique-se de ter o Node.js e o gerenciador de pacotes pnpm instalados em seu sistema. Em seguida, siga estas etapas:
 
-Install it and run:
+1. Clone este repositório:
 
 ```bash
-npm install
-npm run dev
+git clone https://github.com/seu-usuario/meu-almoxarifado-frontend.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Navegue até o diretório do projeto:
 
-or:
+```bash
+cd meu-almoxarifado-frontend
+```
 
-<!-- #default-branch-switch -->
+3. Instale as dependências:
 
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-ui-nextjs-ts)
+```bash
+pnpm install
+```
 
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/material-ui-nextjs-ts)
+## Uso
 
-## Learn more
+Para iniciar o servidor de desenvolvimento, execute o seguinte comando:
 
-To learn more about this example:
+```bash
+pnpm run dev
+```
 
-- [Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Customizing Material UI](https://mui.com/material-ui/customization/how-to-customize/) - approaches to customizing Material UI.
+Isso iniciará o servidor de desenvolvimento em http://localhost:3000.
 
-## What's next?
+## Scripts disponíveis
 
-<!-- #default-branch-switch -->
+- `dev`: Inicia o servidor de desenvolvimento.
+- `build`: Compila o aplicativo para produção.
+- `start`: Inicia o servidor de produção.
+- `lint`: Executa o linter para identificar problemas de estilo de código.
+- `lint:fix`: Executa o linter e tenta corrigir automaticamente os problemas identificados.
+- `format`: Formata o código usando Prettier.
 
-You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://mui.com/material-ui/getting-started/templates/) section.
+Certifique-se de executar os scripts `lint` e `lint:fix` regularmente para manter a qualidade do código.
+
+## Tecnologias Utilizadas
+
+- Next.js
+- React
+- Material-UI
+
+## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+Certifique-se de adaptar as instruções de instalação, scripts e outras informações conforme necessário para o seu projeto específico. Além disso, não se esqueça de adicionar um arquivo LICENSE contendo a licença apropriada para o seu projeto.
