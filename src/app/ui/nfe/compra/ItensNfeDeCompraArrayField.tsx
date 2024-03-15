@@ -20,10 +20,12 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
   const { errors } = useFormState({ control })
 
   const columns: GridColDef<FieldArrayWithId<TNfeDeCompra, 'itens', 'id'>>[] = [
+    { field: 'idItem', headerName: 'ID', width: 70 },
     {
       field: 'referenciaFornecedora',
-      headerName: 'Referencia',
-      width: 150,
+      headerName: 'Referencia Fornecedora',
+      minWidth: 220,
+      flex: 0.2,
       editable: true,
       renderCell: params => {
         const rowIndex = fields.findIndex(field => field.id === params.row.id)
@@ -39,8 +41,9 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
     },
     {
       field: 'descricaoFornecedora',
-      headerName: 'Descricao',
-      width: 150,
+      headerName: 'Descricao Fornecedora',
+      minWidth: 220,
+      flex: 0.2,
       editable: true,
       renderCell: params => {
         const rowIndex = fields.findIndex(field => field.id === params.row.id)
@@ -59,12 +62,13 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
       headerName: 'Material',
       minWidth: 200,
       flex: 0.3,
-      renderCell: params => <VinculoMaterialButton id={params.row.idMaterial} />
+      renderCell: params => <VinculoMaterialButton row={params.row} />
     },
     {
       field: 'undCom',
       headerName: 'Unidade',
-      width: 150,
+      minWidth: 155,
+      flex: 0.1,
       editable: true,
       renderCell: params => {
         const rowIndex = fields.findIndex(field => field.id === params.row.id)
@@ -81,7 +85,8 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
     {
       field: 'quantCom',
       headerName: 'Quantidade',
-      width: 150,
+      minWidth: 110,
+      flex: 0.1,
       editable: true,
       type: 'number',
       renderCell: params => {
@@ -99,7 +104,8 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
     {
       field: 'valorUntCom',
       headerName: 'Valor Unit.',
-      width: 150,
+      minWidth: 110,
+      flex: 0.1,
       editable: true,
       type: 'number',
       renderCell: params => {
@@ -117,7 +123,8 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
     {
       field: 'valorIpi',
       headerName: 'IPI',
-      width: 150,
+      minWidth: 110,
+      flex: 0.1,
       editable: true,
       type: 'number',
       renderCell: params => {
@@ -136,7 +143,8 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
       field: 'actions',
       type: 'actions',
       headerName: 'Ações',
-      width: 100,
+      minWidth: 130,
+      flex: 0.1,
       cellClassName: 'actions',
       getActions: ({ id }) => {
         const removeItem = () => {

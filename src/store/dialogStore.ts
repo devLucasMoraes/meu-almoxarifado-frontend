@@ -8,6 +8,8 @@ type DialogStore = {
     transportadoraDialog: boolean
     requisitanteDialog: boolean
     localDeAplicacaoDialog: boolean
+    vincularMaterialDialog: boolean
+    desvincularMaterialDialog: boolean
   }
   toggleCategoriaDialog: (isOpen: boolean) => void
   toggleMaterialDialog: (isOpen: boolean) => void
@@ -15,6 +17,8 @@ type DialogStore = {
   toggleTransportadoraDialog: (isOpen: boolean) => void
   toggleRequisitanteDialog: (isOpen: boolean) => void
   toggleLocalDeAplicacaoDialog: (isOpen: boolean) => void
+  toggleVincularMaterialDialog: (isOpen: boolean) => void
+  toggleDesvincularMaterialDialog: (isOpen: boolean) => void
 }
 
 export const useIsOpenDialog = create<DialogStore>()(set => ({
@@ -24,7 +28,9 @@ export const useIsOpenDialog = create<DialogStore>()(set => ({
     fornecedoraDialog: false,
     transportadoraDialog: false,
     requisitanteDialog: false,
-    localDeAplicacaoDialog: false
+    localDeAplicacaoDialog: false,
+    vincularMaterialDialog: false,
+    desvincularMaterialDialog: false
   },
   toggleRequisitanteDialog: (isOpen: boolean) =>
     set(state => ({
@@ -49,5 +55,13 @@ export const useIsOpenDialog = create<DialogStore>()(set => ({
   toggleMaterialDialog: (isOpen: boolean) =>
     set(state => ({
       isOpen: { ...state.isOpen, materialDialog: isOpen }
+    })),
+  toggleVincularMaterialDialog: (isOpen: boolean) =>
+    set(state => ({
+      isOpen: { ...state.isOpen, vincularMaterialDialog: isOpen }
+    })),
+  toggleDesvincularMaterialDialog: (isOpen: boolean) =>
+    set(state => ({
+      isOpen: { ...state.isOpen, desvincularMaterialDialog: isOpen }
     }))
 }))

@@ -53,12 +53,10 @@ const PagePaths = {
     CREATE_PAGE: '/dashboard/categorias/create'
   },
   VINCULOS: {
-    LIST: '/vinculos',
-    SHOW: '/vinculos/show/',
-    SHOW_QUERY: '/vinculos/show/query',
-    EDIT: '/vinculos/edit/',
-    NEW: '/vinculos/new',
-    DELETE: '/vinculos/delete/'
+    LIST_PAGE: '/dashboard/vinculos',
+    SHOW_PAGE: '/dashboard/vinculos/id/show',
+    EDIT_PAGE: '/dashboard/vinculos/id/edit',
+    CREATE_PAGE: '/dashboard/vinculos/create'
   },
   EMPRESTIMO: {
     A_PAGAR: {

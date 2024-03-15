@@ -1,4 +1,12 @@
-import { TCategoria, TFornecedora, TLocalDeAplicacao, TMaterial, TRequisitante, TTransportadora } from '@/types/models'
+import {
+  TCategoria,
+  TFornecedora,
+  TLocalDeAplicacao,
+  TMaterial,
+  TRequisitante,
+  TTransportadora,
+  TVinculoMaterialFornecedora
+} from '@/types/models'
 import { create } from 'zustand'
 
 type dialogDataStore = {
@@ -8,6 +16,8 @@ type dialogDataStore = {
   transportadoraDialogData: TTransportadora | undefined
   requisitanteDialogData: TRequisitante | undefined
   localDeAplicacaoDialogData: TLocalDeAplicacao | undefined
+  vinculoMaterialFornecedoraDialogData: TVinculoMaterialFornecedora | undefined
+  materiaisVinculadosDialogData: TVinculoMaterialFornecedora[] | undefined
 
   setCategoriaDialogData: (data: TCategoria | undefined) => void
   setMaterialDialogData: (data: TMaterial | undefined) => void
@@ -15,6 +25,13 @@ type dialogDataStore = {
   setTransportadoraDialogData: (data: TTransportadora | undefined) => void
   setRequisitanteDialogData: (data: TRequisitante | undefined) => void
   setLocalDeAplicacaoDialogData: (data: TLocalDeAplicacao | undefined) => void
+  setMateriaisVinculadosDialogData: (data: TVinculoMaterialFornecedora[] | undefined) => void
+  setVinculoMaterialFornecedoraDialogData: (
+    updater:
+      | TVinculoMaterialFornecedora
+      | ((old: TVinculoMaterialFornecedora | undefined) => TVinculoMaterialFornecedora | undefined)
+      | undefined
+  ) => void
 }
 
 export const useDialogDataStore = create<dialogDataStore>()(set => ({
@@ -24,6 +41,8 @@ export const useDialogDataStore = create<dialogDataStore>()(set => ({
   transportadoraDialogData: undefined,
   requisitanteDialogData: undefined,
   localDeAplicacaoDialogData: undefined,
+  vinculoMaterialFornecedoraDialogData: undefined,
+  materiaisVinculadosDialogData: undefined,
   setCategoriaDialogData: (data: TCategoria | undefined) =>
     set(() => ({
       categoriaDialogData: data
@@ -47,5 +66,19 @@ export const useDialogDataStore = create<dialogDataStore>()(set => ({
   setLocalDeAplicacaoDialogData: (data: TLocalDeAplicacao | undefined) =>
     set(() => ({
       localDeAplicacaoDialogData: data
+    })),
+  setMateriaisVinculadosDialogData: (data: TVinculoMaterialFornecedora[] | undefined) =>
+    set(() => ({
+      materiaisVinculadosDialogData: data
+    })),
+  setVinculoMaterialFornecedoraDialogData: (
+    updater:
+      | TVinculoMaterialFornecedora
+      | ((old: TVinculoMaterialFornecedora | undefined) => TVinculoMaterialFornecedora | undefined)
+      | undefined
+  ) =>
+    set(state => ({
+      vinculoMaterialFornecedoraDialogData:
+        typeof updater === 'function' ? updater(state.vinculoMaterialFornecedoraDialogData) : updater
     }))
 }))
