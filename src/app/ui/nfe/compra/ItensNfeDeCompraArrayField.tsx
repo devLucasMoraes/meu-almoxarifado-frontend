@@ -6,6 +6,7 @@ import { GridActionsCellItem, GridColDef } from '@mui/x-data-grid'
 import { Control, FieldArrayWithId, useFieldArray, useFormState } from 'react-hook-form'
 import { ArrayFieldDataGrid } from '../../shared/components/ArrayFieldDataGrid'
 import { VinculoMaterialButton } from '../../shared/components/CrudTools/VinculoMaterialButton'
+import { SelectCell, SelectEditInputCell } from '../../shared/components/DataGridCells'
 
 export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeDeCompra> }) => {
   console.log('renderizou ItensNfeDeCompraArrayField')
@@ -18,6 +19,17 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
   })
 
   const { errors } = useFormState({ control })
+
+  const renderSelectEditInputCell: GridColDef['renderCell'] = params => {
+    return <SelectEditInputCell {...params} />
+  }
+
+  const renderSelectCell: GridColDef['renderCell'] = params => {
+    const rowIndex = fields.findIndex(field => field.id === params.row.id)
+    const erro = errors.itens?.[rowIndex]?.undCom
+
+    return <SelectCell {...params} errors={erro} />
+  }
 
   const columns: GridColDef<FieldArrayWithId<TNfeDeCompra, 'itens', 'id'>>[] = [
     { field: 'idItem', headerName: 'ID', width: 70 },
@@ -70,17 +82,8 @@ export const ItensNfeDeCompraArrayField = ({ control }: { control: Control<TNfeD
       minWidth: 155,
       flex: 0.1,
       editable: true,
-      renderCell: params => {
-        const rowIndex = fields.findIndex(field => field.id === params.row.id)
-        return (
-          <div>
-            {params.value}
-            {errors.itens?.[rowIndex]?.undCom && (
-              <div style={{ color: 'red' }}>{errors.itens[rowIndex]?.undCom?.message}</div>
-            )}
-          </div>
-        )
-      }
+      renderEditCell: renderSelectEditInputCell,
+      renderCell: renderSelectCell
     },
     {
       field: 'quantCom',

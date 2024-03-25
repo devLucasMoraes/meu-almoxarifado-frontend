@@ -1,78 +1,124 @@
-import { Environment } from '@/environment'
-import { useMyFieldArray } from '@/hooks/useMyFieldArray'
-import { materialQueries } from '@/queries/MaterialQueries'
 import { useIsOpenDialog } from '@/store/dialogStore'
-import { TRequisicaoDeEstoque } from '@/types/models'
-import { AddBoxSharp, Delete, Edit, Inventory, Preview } from '@mui/icons-material'
-import { Chip, Divider, Grid, IconButton, Paper, Stack, Tooltip } from '@mui/material'
-import { GridColDef } from '@mui/x-data-grid'
-import { useState } from 'react'
-import { Control, FieldArrayWithId } from 'react-hook-form'
-import { MyDataGrid } from '../shared/components/MyDataGrid'
-import { RHFAutocompleteField } from '../shared/components/RHFwithMUI/RHFAutocompleteField'
-import { RHFTextField } from '../shared/components/RHFwithMUI/RHFTextField'
-import { UnderlineLink } from '../shared/components/UnderlineLink'
+import { TItemRequisicaoDeEstoque, TRequisicaoDeEstoque } from '@/types/models'
+import { Delete, Inventory } from '@mui/icons-material'
+import { Chip, Divider, Grid, Paper } from '@mui/material'
+import { GridActionsCellItem, GridColDef } from '@mui/x-data-grid'
+import { Control, FieldArrayWithId, useFieldArray, useFormState } from 'react-hook-form'
+import { ArrayFieldDataGrid } from '../shared/components/ArrayFieldDataGrid'
+import {
+  AutocompleteCell,
+  AutocompleteEditInputCell,
+  SelectCell,
+  SelectEditInputCell
+} from '../shared/components/DataGridCells'
 
 export const ItensRequisicaoDeEstoqueArrayField = ({ control }: { control: Control<TRequisicaoDeEstoque> }) => {
-  console.log('renderizou')
-
-  const { LIMITE_DE_LINHAS, MATERIAIS } = Environment
+  console.log('renderizou ItensRequisicaoDeEstoqueArrayField')
 
   const { toggleMaterialDialog } = useIsOpenDialog()
 
-  const { fields, handleAddItem, handleInfo, handleEdit, handleDelete, handleBlur, selectedItemIndex, readOnly } =
-    useMyFieldArray({
-      control: control,
-      name: 'itens',
-      nameWhachData: 'itens'
-    })
-
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: LIMITE_DE_LINHAS
+  const { append, remove, fields, update } = useFieldArray({
+    control: control,
+    name: 'itens'
   })
 
+  const { errors } = useFormState({ control })
+
+  const renderAutocompleteCell: GridColDef['renderCell'] = params => {
+    const rowIndex = fields.findIndex(field => field.id === params.row.id)
+    const erro = errors.itens?.[rowIndex]?.idMaterial
+
+    return <AutocompleteCell {...params} errors={erro} />
+  }
+
+  const renderAutocompleteEditInputCell: GridColDef['renderCell'] = params => {
+    return <AutocompleteEditInputCell {...params} />
+  }
+
+  const renderSelectEditInputCell: GridColDef['renderCell'] = params => {
+    return <SelectEditInputCell {...params} />
+  }
+
+  const renderSelectCell: GridColDef['renderCell'] = params => {
+    const rowIndex = fields.findIndex(field => field.id === params.row.id)
+    const erro = errors.itens?.[rowIndex]?.undConsumo
+
+    return <SelectCell {...params} errors={erro} />
+  }
+
   const columns: GridColDef<FieldArrayWithId<TRequisicaoDeEstoque, 'itens', 'id'>>[] = [
-    { field: 'idItem', headerName: 'ID', width: 70 },
+    { field: 'id', headerName: 'ID', width: 225 },
     {
       field: 'idMaterial',
       headerName: 'Material',
       minWidth: 200,
       flex: 0.3,
-      renderCell: params => (
-        <UnderlineLink
-          queries={materialQueries}
-          id={params.row.idMaterial}
-          linkPath={`${MATERIAIS.SHOW_PAGE.replace('id', String(params.row.idMaterial))}`}
-          nameProperty='descricao'
-        />
-      )
+      editable: true,
+      renderEditCell: renderAutocompleteEditInputCell,
+      renderCell: renderAutocompleteCell
     },
-    { field: 'quantEntregue', headerName: 'Qtde Embalagem', minWidth: 155, flex: 0.2 },
-    { field: 'undConsumo', headerName: 'Embalagem', minWidth: 155, flex: 0.2 },
-    { field: 'valorUntEntregue', headerName: 'Valor Untitário', minWidth: 155, flex: 0.1 },
+    {
+      field: 'quantEntregue',
+      headerName: 'Qtde Entregue',
+      minWidth: 155,
+      flex: 0.2,
+      editable: true,
+      type: 'number',
+      renderCell: params => {
+        const rowIndex = fields.findIndex(field => field.id === params.row.id)
+        return (
+          <div>
+            {params.value}
+            {errors.itens?.[rowIndex]?.quantEntregue && (
+              <div style={{ color: 'red' }}>{errors.itens[rowIndex]?.quantEntregue?.message}</div>
+            )}
+          </div>
+        )
+      }
+    },
+    {
+      field: 'undConsumo',
+      headerName: 'Unidade Consumo',
+      minWidth: 155,
+      flex: 0.2,
+      editable: true,
+      renderEditCell: renderSelectEditInputCell,
+      renderCell: renderSelectCell
+    },
+    {
+      field: 'valorUntEntregue',
+      headerName: 'Valor Untitário',
+      minWidth: 155,
+      flex: 0.1,
+      editable: true,
+      type: 'number',
+      renderCell: params => {
+        const rowIndex = fields.findIndex(field => field.id === params.row.id)
+        return (
+          <div>
+            {params.value}
+            {errors.itens?.[rowIndex]?.valorUntEntregue && (
+              <div style={{ color: 'red' }}>{errors.itens[rowIndex]?.valorUntEntregue?.message}</div>
+            )}
+          </div>
+        )
+      }
+    },
     {
       field: 'actions',
+      type: 'actions',
       headerName: 'Ações',
-      minWidth: 150,
+      minWidth: 130,
       flex: 0.1,
-      sortable: false,
-      disableColumnMenu: true,
-      renderCell: params => (
-        <Stack direction='row' spacing={2}>
-          <IconButton color='info' size='small' onClick={() => handleInfo(params)}>
-            <Preview fontSize='inherit' />
-          </IconButton>
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        const removeItem = () => {
+          const rowIndex = fields.findIndex(row => row.id === id)
+          remove(rowIndex)
+        }
 
-          <IconButton color='info' size='small' onClick={() => handleEdit(params)}>
-            <Edit fontSize='inherit' />
-          </IconButton>
-
-          <IconButton color='error' size='small' onClick={() => handleDelete(params)}>
-            <Delete fontSize='inherit' />
-          </IconButton>
-        </Stack>
-      )
+        return [<GridActionsCellItem key={id} icon={<Delete />} label='Remover' onClick={removeItem} color='inherit' />]
+      }
     }
   ]
 
@@ -80,89 +126,16 @@ export const ItensRequisicaoDeEstoqueArrayField = ({ control }: { control: Contr
     <Grid container rowGap={2}>
       <Grid item flexGrow={1}>
         <Divider textAlign='left'>
-          <Chip label='Adicionar novo item' onClick={() => handleAddItem()} icon={<Inventory />} />
+          <Chip
+            label='Adicionar novo item'
+            onClick={() => append({} as TItemRequisicaoDeEstoque)}
+            icon={<Inventory />}
+          />
         </Divider>
       </Grid>
 
-      {fields
-        .filter(field => fields.indexOf(field) === selectedItemIndex)
-        .map(field => {
-          const originalIndex = fields.indexOf(field)
-          return (
-            <Grid
-              key={field.id}
-              container
-              component={Paper}
-              padding={2}
-              rowGap={2}
-              columnSpacing={1}
-              sx={{ backgroundColor: '#f6f7fb' }}
-              alignItems='flex-end'
-            >
-              <Grid item xs={10} lg={4} textAlign='end'>
-                <Tooltip title='Novo Material / Insumo'>
-                  <IconButton color='primary' size='small' onClick={() => toggleMaterialDialog(true)}>
-                    <AddBoxSharp />
-                  </IconButton>
-                </Tooltip>
-                <RHFAutocompleteField
-                  control={control}
-                  name={`itens.${originalIndex}.idMaterial`}
-                  placeholder='Materiais/Insumos'
-                  queries={materialQueries}
-                  onBlur={() => handleBlur(originalIndex)}
-                  readOnly={readOnly}
-                />
-              </Grid>
-
-              <Grid item xs={12} lg={2}>
-                <RHFTextField
-                  control={control}
-                  name={`itens.${originalIndex}.quantEntregue`}
-                  placeholder='Quantidade'
-                  type='number'
-                  fullWidth
-                  onBlur={() => handleBlur(originalIndex)}
-                  readOnly={readOnly}
-                />
-              </Grid>
-
-              <Grid item xs={12} lg={3}>
-                <RHFTextField
-                  control={control}
-                  name={`itens.${originalIndex}.undConsumo`}
-                  placeholder='Unidade'
-                  isSelected='unidade'
-                  fullWidth
-                  onBlur={() => handleBlur(originalIndex)}
-                  readOnly={readOnly}
-                />
-              </Grid>
-
-              <Grid item xs={12} lg={2}>
-                <RHFTextField
-                  control={control}
-                  name={`itens.${originalIndex}.valorUntEntregue`}
-                  placeholder='Valor unitário'
-                  type='number'
-                  fullWidth
-                  onBlur={() => handleBlur(originalIndex)}
-                  readOnly={readOnly}
-                />
-              </Grid>
-            </Grid>
-          )
-        })}
-
       <Grid item xs={12} component={Paper} variant='outlined'>
-        <MyDataGrid
-          isLoading={false}
-          columns={columns}
-          rows={fields}
-          totalRowCount={fields.length}
-          paginationModel={paginationModel}
-          setPaginationModel={setPaginationModel}
-        />
+        <ArrayFieldDataGrid columns={columns} fields={fields} update={update} />
       </Grid>
     </Grid>
   )

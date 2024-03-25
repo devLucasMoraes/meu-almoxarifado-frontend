@@ -102,7 +102,7 @@ export const NfeDeCompraSchema = z.object({
 export const ItemRequisicaoDeEstoqueSchema = z.object({
   idItem: z.number().optional(),
   idMaterial: z.number(),
-  undConsumo: z.string().nonempty(),
+  undConsumo: z.nativeEnum(Unidade),
   quantEntregue: z.number()
 })
 

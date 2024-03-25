@@ -19,6 +19,7 @@ export function ArrayFieldDataGrid<T extends FieldValues>({
   }, [fields])
 
   const handleRowUpdate = (newRow: any, oldRow: any) => {
+    console.log('handleRowUpdate', newRow, oldRow)
     const rowIndex = fields.findIndex(row => row.id === oldRow.id)
     update(rowIndex, newRow)
     const updatedRows = [...fields]
