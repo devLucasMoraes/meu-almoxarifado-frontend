@@ -1,14 +1,3 @@
-export enum Situacao {
-  EM_ABERTO = 'EM_ABERTO',
-  BAIXADO = 'BAIXADO',
-  BAIXADO_PARCIALMENTE = 'BAIXADO_PARCIALMENTE'
-}
-
-export enum Tipo {
-  A_PAGAR = 'ENTRADA',
-  A_RECEBER = 'SAIDA'
-}
-
 export enum Unidade {
   AMPOLA = 'AMPOLA',
   BALDE = 'BALDE',

@@ -40,6 +40,8 @@ const PagePaths = {
     CREATE_PAGE: '/dashboard/fornecedoras/create'
   },
   MATERIAIS: {
+    ACERTO_ESTOQUE: '/dashboard/estoque/acerto',
+    ESTOQUE: '/dashboard/estoque',
     QUERY: '/materiais/query',
     LIST_PAGE: '/dashboard/materiais',
     SHOW_PAGE: '/dashboard/materiais/id/show',
@@ -57,20 +59,6 @@ const PagePaths = {
     SHOW_PAGE: '/dashboard/vinculos/id/show',
     EDIT_PAGE: '/dashboard/vinculos/id/edit',
     CREATE_PAGE: '/dashboard/vinculos/create'
-  },
-  EMPRESTIMO: {
-    A_PAGAR: {
-      LIST_PAGE: '/dashboard/emprestimos/a-pagar',
-      SHOW_PAGE: '/dashboard/emprestimos/a-pagar/id/show',
-      EDIT_PAGE: '/dashboard/emprestimos/a-pagar/id/edit',
-      CREATE_PAGE: '/dashboard/emprestimos/a-pagar/create'
-    },
-    A_RECEBER: {
-      LIST_PAGE: '/dashboard/emprestimos/a-receber',
-      SHOW_PAGE: '/dashboard/emprestimos/a-receber/id/show',
-      EDIT_PAGE: '/dashboard/emprestimos/a-receber/id/edit',
-      CREATE_PAGE: '/dashboard/emprestimos/a-receber/create'
-    }
   }
 }
 

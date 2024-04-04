@@ -2,12 +2,15 @@
 import { Environment } from '@/environment'
 import { IDrawerOptions } from '@/types/layout'
 import {
+  Build,
   Category,
   ChevronLeft,
   ChevronRight,
+  Description,
   ExpandMore,
   Factory,
   ImportExport,
+  InsertChart,
   Inventory,
   LineAxis,
   LocalShipping,
@@ -106,8 +109,8 @@ export const AppSideBar = () => {
       group: 'Cadastro'
     },
     {
-      label: 'NF-e de compra',
-      icon: <ImportExport />,
+      label: 'NF-e de Compra',
+      icon: <Description />,
       path: Environment.NFE_DE_COMPRA.LIST_PAGE,
       group: 'Compras'
     },
@@ -118,10 +121,16 @@ export const AppSideBar = () => {
       group: 'Estoque'
     },
     {
-      label: 'A Pagar',
-      icon: <ImportExport />,
-      path: '/dashboard/emprestimos/a-pagar',
-      group: 'emprestimos'
+      label: 'Acerto de Estoque',
+      icon: <Build />,
+      path: Environment.MATERIAIS.ACERTO_ESTOQUE,
+      group: 'Estoque'
+    },
+    {
+      label: 'Saldo',
+      icon: <InsertChart />,
+      path: Environment.MATERIAIS.ESTOQUE,
+      group: 'Estoque'
     }
   ]
 
@@ -161,18 +170,17 @@ export const AppSideBar = () => {
                 <Typography variant='h6'>Cadastro</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {drawerOptions.map(
-                  drawerOption =>
-                    drawerOption.group === 'Cadastro' && (
-                      <ListItemLink
-                        key={drawerOption.path}
-                        label={drawerOption.label}
-                        icon={drawerOption.icon}
-                        to={drawerOption.path}
-                        onClick={mdDown ? toggleDrawerOpen : undefined}
-                      />
-                    )
-                )}
+                {drawerOptions
+                  .filter(option => option.group === 'Cadastro')
+                  .map(drawerOption => (
+                    <ListItemLink
+                      key={drawerOption.path}
+                      label={drawerOption.label}
+                      icon={drawerOption.icon}
+                      to={drawerOption.path}
+                      onClick={mdDown ? toggleDrawerOpen : undefined}
+                    />
+                  ))}
               </AccordionDetails>
             </Accordion>
           )}
@@ -188,18 +196,17 @@ export const AppSideBar = () => {
                 <Typography variant='h6'>Compras</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {drawerOptions.map(
-                  drawerOption =>
-                    drawerOption.group === 'Compras' && (
-                      <ListItemLink
-                        key={drawerOption.path}
-                        label={drawerOption.label}
-                        icon={drawerOption.icon}
-                        to={drawerOption.path}
-                        onClick={mdDown ? toggleDrawerOpen : undefined}
-                      />
-                    )
-                )}
+                {drawerOptions
+                  .filter(option => option.group === 'Compras')
+                  .map(drawerOption => (
+                    <ListItemLink
+                      key={drawerOption.path}
+                      label={drawerOption.label}
+                      icon={drawerOption.icon}
+                      to={drawerOption.path}
+                      onClick={mdDown ? toggleDrawerOpen : undefined}
+                    />
+                  ))}
               </AccordionDetails>
             </Accordion>
           )}
@@ -215,45 +222,17 @@ export const AppSideBar = () => {
                 <Typography variant='h6'>Estoque</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {drawerOptions.map(
-                  drawerOption =>
-                    drawerOption.group === 'Estoque' && (
-                      <ListItemLink
-                        key={drawerOption.path}
-                        label={drawerOption.label}
-                        icon={drawerOption.icon}
-                        to={drawerOption.path}
-                        onClick={mdDown ? toggleDrawerOpen : undefined}
-                      />
-                    )
-                )}
-              </AccordionDetails>
-            </Accordion>
-          )}
-
-          {isDrawerOpen && (
-            <Accordion
-              disableGutters
-              expanded={expanded === 'Emprestimos'}
-              onChange={handleChange('Emprestimos')}
-              sx={() => handleAccordionStyle('Emprestimos')}
-            >
-              <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography variant='h6'>Emprestimos</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {drawerOptions.map(
-                  drawerOption =>
-                    drawerOption.group === 'emprestimos' && (
-                      <ListItemLink
-                        key={drawerOption.path}
-                        label={drawerOption.label}
-                        icon={drawerOption.icon}
-                        to={drawerOption.path}
-                        onClick={mdDown ? toggleDrawerOpen : undefined}
-                      />
-                    )
-                )}
+                {drawerOptions
+                  .filter(option => option.group === 'Estoque')
+                  .map(drawerOption => (
+                    <ListItemLink
+                      key={drawerOption.path}
+                      label={drawerOption.label}
+                      icon={drawerOption.icon}
+                      to={drawerOption.path}
+                      onClick={mdDown ? toggleDrawerOpen : undefined}
+                    />
+                  ))}
               </AccordionDetails>
             </Accordion>
           )}

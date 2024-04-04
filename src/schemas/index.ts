@@ -1,25 +1,25 @@
-import { Situacao, Tipo, Unidade } from '@/types/enum'
+import { Unidade } from '@/types/enum'
 import { z } from 'zod'
 
 export const ConversaoDeConsumoSchema = z.object({
   idConversao: z.number().optional(),
-  undConsumo: z.string().nonempty(),
-  undEstoque: z.string().nonempty(),
+  undConsumo: z.string().min(1),
+  undEstoque: z.string().min(1),
   fatorDeConversao: z.coerce.number()
 })
 
 export const CategoriaSchema = z.object({
   id: z.number().optional(),
-  nome: z.string().nonempty(),
-  undEstoque: z.string().nonempty(),
+  nome: z.string().min(1),
+  undEstoque: z.string().min(1),
   estoqueMinimo: z.number().nonnegative(),
   conversoesDeConsumo: z.array(ConversaoDeConsumoSchema).optional()
 })
 
 export const ConversaoDeCompraSchema = z.object({
   idConversao: z.number().optional(),
-  undCompra: z.string().nonempty(),
-  undEstoque: z.string().nonempty(),
+  undCompra: z.string().min(1),
+  undEstoque: z.string().min(1),
   fatorDeConversao: z.number()
 })
 
@@ -34,7 +34,7 @@ export const VinculoMaterialFornecedoraSchema = z.object({
 
 export const MaterialSchema = z.object({
   id: z.number().optional(),
-  descricao: z.string().nonempty(),
+  descricao: z.string().min(1),
   valorUntMedAuto: z.boolean(),
   valorUnt: z.coerce.number().optional(),
   idCategoria: z.number(),
@@ -43,30 +43,30 @@ export const MaterialSchema = z.object({
 
 export const FornecedoraSchema = z.object({
   id: z.number().optional(),
-  nomeFantasia: z.string().nonempty(),
-  razaoSocial: z.string().nonempty(),
-  cnpj: z.string().nonempty(),
-  fone: z.string().nonempty(),
+  nomeFantasia: z.string().min(1),
+  razaoSocial: z.string().min(1),
+  cnpj: z.string().min(1),
+  fone: z.string().min(1),
   materiaisVinculados: z.array(VinculoMaterialFornecedoraSchema).optional()
 })
 
 export const TransportadoraSchema = z.object({
   id: z.number().optional(),
-  nomeFantasia: z.string().nonempty(),
-  razaoSocial: z.string().nonempty(),
-  cnpj: z.string().nonempty(),
-  fone: z.string().nonempty()
+  nomeFantasia: z.string().min(1),
+  razaoSocial: z.string().min(1),
+  cnpj: z.string().min(1),
+  fone: z.string().min(1)
 })
 
 export const RequisitanteSchema = z.object({
   id: z.number().optional(),
-  nome: z.string().nonempty(),
-  fone: z.string().nonempty()
+  nome: z.string().min(1),
+  fone: z.string().min(1)
 })
 
 export const LocalDeAplicacaoSchema = z.object({
   id: z.number().optional(),
-  nome: z.string().nonempty()
+  nome: z.string().min(1)
 })
 
 export const ItemNfeDeCompraSchema = z.object({
@@ -116,22 +116,9 @@ export const RequisicaoDeEstoqueSchema = z.object({
   itens: z.array(ItemRequisicaoDeEstoqueSchema)
 })
 
-export const ItemEmprestimoSchema = z.object({
-  idItem: z.number().optional(),
-  idMaterial: z.number().optional(),
-  unidade: z.nativeEnum(Unidade),
-  quantEntregue: z.number().nonnegative(),
-  valorUnt: z.number().nonnegative()
-})
-
-export const EmprestimoSchema = z.object({
+export const AcertoSchema = z.object({
   id: z.number().optional(),
-  tipo: z.nativeEnum(Tipo),
-  atribuirAoEstoqueFisico: z.boolean(),
-  dataDeAbertura: z.date(),
-  valorTotal: z.number().nonnegative(),
-  idFornecedora: z.number().nonnegative(),
-  situacao: z.nativeEnum(Situacao),
-  itensAReceber: z.array(ItemEmprestimoSchema).optional(),
-  itensAPagar: z.array(ItemEmprestimoSchema).optional()
+  idMaterial: z.number(),
+  justificativa: z.string().min(1),
+  quantidade: z.number()
 })
